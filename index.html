@@ -187,9 +187,33 @@ async function buildShareCard(order){
   return await new Promise(res=>cv.toBlob(res,"image/png"));
 }
 let sharePrep=null;
-function prepareShare(order){const text="我在饭永远不来点了 "+(order.total||"一桌好菜")+"，实付 ¥0 😌 饭永远不到，多巴胺先到 → "+SITE_URL;sharePrep={file:null,text,order};buildShareCard(order).then(b=>{if(b&&sharePrep)sharePrep.file=new File([b],"fan-yongyuan-bulai.png",{type:"image/png"})}).catch(()=>{})}
-async function shareOrder(order){if(order)prepareShare(order);const p=sharePrep;if(!p){showToast("请先下一单再分享 😋");return}if(!p.file){showToast("图片生成中，请稍后再试…");prepareShare(p.order||{});return}try{if(p.file&&navigator.canShare&&navigator.canShare({files:[p.file]})){await navigator.share({files:[p.file],text:p.text});return}if(navigator.share){await navigator.share({text:p.text,url:SITE_URL});return}}catch(e){if(e&&e.name==="AbortError")return}if(p.file){const a=document.createElement("a");a.href=URL.createObjectURL(p.file);a.download="饭永远不来-晒单.png";a.click();URL.revokeObjectURL(a.href)}try{await navigator.clipboard.writeText(p.text);showToast("📸 图片已保存 · 文案已复制")}catch(e){showToast("📸 晒单图片已保存")}}
-function showSharePreview(order){prepareShare(order);shareSheet.innerHTML='<button class="x-btn" type="button" style="position:absolute;right:14px;top:14px" data-x>✕</button><h3>📸 分享你的虚拟外卖</h3><p style="color:var(--muted);font-weight:700;margin:12px 0">晒单图含二维码，好友扫码直达主页</p><div id="sharePreview" style="min-height:200px;color:var(--muted);font-weight:700;padding:20px">生成中…</div><button class="btn btn-primary" type="button" id="doShare" style="width:100%;margin-top:12px">分享 / 保存图片</button>';shareSheet.querySelector("[data-x]").onclick=()=>{shareModal.classList.remove("show");overlay.classList.remove("show")};openModal(shareModal);buildShareCard(order).then(b=>{if(!b)return;const img=new Image();img.src=URL.createObjectURL(b);img.style.maxWidth="100%";img.style.borderRadius="16px";img.onload=()=>{sharePrep={file:new File([b],"share.png",{type:"image/png"}),text:sharePrep?.text||"",order};document.getElementById("sharePreview").innerHTML="";document.getElementById("sharePreview").appendChild(img)};document.getElementById("doShare").onclick=()=>shareOrder()}).catch(()=>{document.getElementById("sharePreview").textContent="生成失败，请重试"})}
+function shareText(order){return"我在饭永远不来点了 "+(order.total||"一桌好菜")+"，实付 ¥0 😌 饭永远不到，多巴胺先到 → "+SITE_URL}
+function prepareShare(order){const text=shareText(order);sharePrep={file:null,text,order,no:order.no};buildShareCard(order).then(b=>{if(b&&sharePrep&&sharePrep.no===order.no)sharePrep.file=new File([b],"fan-yongyuan-bulai.png",{type:"image/png"})}).catch(()=>{})}
+async function shareOrder(order){
+  const target=order||sharePrep?.order||loadOrders()[0];
+  if(!target){showToast("请先下一单再分享 😋");return}
+  const btn=document.activeElement;
+  const isBtn=btn&&btn.tagName==="BUTTON";
+  let orig="";
+  if(isBtn){orig=btn.textContent;btn.disabled=true;btn.textContent="生成中…"}
+  showToast("📸 正在生成晒单图…");
+  let file=sharePrep?.file&&sharePrep?.no===target.no?sharePrep.file:null;
+  const text=sharePrep?.text||shareText(target);
+  if(!file){
+    const blob=await buildShareCard(target);
+    if(!blob){if(isBtn){btn.disabled=false;btn.textContent=orig}showToast("😅 生成失败，请重试");return}
+    file=new File([blob],"fan-yongyuan-bulai.png",{type:"image/png"});
+    sharePrep={file,text,order:target,no:target.no};
+  }
+  try{
+    if(navigator.canShare&&navigator.canShare({files:[file]})){await navigator.share({files:[file],text});if(isBtn){btn.disabled=false;btn.textContent=orig}return}
+    if(navigator.share){await navigator.share({text,url:SITE_URL});if(isBtn){btn.disabled=false;btn.textContent=orig}return}
+  }catch(e){if(e&&e.name==="AbortError"){if(isBtn){btn.disabled=false;btn.textContent=orig}return}}
+  const a=document.createElement("a");a.href=URL.createObjectURL(file);a.download="饭永远不来-晒单.png";document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),5000);
+  try{await navigator.clipboard.writeText(text);showToast("📸 图片已保存 · 文案已复制")}catch(e){showToast("📸 晒单图片已保存")}
+  if(isBtn){btn.disabled=false;btn.textContent=orig}
+}
+function showSharePreview(order){prepareShare(order);shareSheet.innerHTML='<button class="x-btn" type="button" style="position:absolute;right:14px;top:14px" data-x>✕</button><h3>📸 分享你的虚拟外卖</h3><p style="color:var(--muted);font-weight:700;margin:12px 0">晒单图含二维码，好友扫码直达主页</p><div id="sharePreview" style="min-height:200px;color:var(--muted);font-weight:700;padding:20px">生成中…</div><button class="btn btn-primary" type="button" id="doShare" style="width:100%;margin-top:12px">分享 / 保存图片</button>';shareSheet.querySelector("[data-x]").onclick=()=>{shareModal.classList.remove("show");overlay.classList.remove("show")};openModal(shareModal);buildShareCard(order).then(b=>{if(!b)return;const img=new Image();img.src=URL.createObjectURL(b);img.style.maxWidth="100%";img.style.borderRadius="16px";img.onload=()=>{sharePrep={file:new File([b],"share.png",{type:"image/png"}),text:shareText(order),order,no:order.no};document.getElementById("sharePreview").innerHTML="";document.getElementById("sharePreview").appendChild(img)};document.getElementById("doShare").onclick=()=>shareOrder()}).catch(()=>{document.getElementById("sharePreview").textContent="生成失败，请重试"})}
 const cart=[],ORDERS_KEY="fnc_cn_orders";
 const overlay=document.getElementById("overlay"),drawer=document.getElementById("cartDrawer"),coModal=document.getElementById("checkoutModal"),coSheet=document.getElementById("checkoutSheet"),trModal=document.getElementById("trackModal"),trSheet=document.getElementById("trackSheet"),custModal=document.getElementById("custModal"),custSheet=document.getElementById("custSheet"),shareModal=document.getElementById("shareModal"),shareSheet=document.getElementById("shareSheet"),pill=document.getElementById("cartPill");
 let trackTimer=null;
