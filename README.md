@@ -4,6 +4,8 @@
 想吃什么点什么，购物车加满、结账、看骑手狂奔——饭永远不到，多巴胺先到。全程虚拟，一分不花。
 
 ---
+<img width="1080" height="1640" alt="zhangdan" src="https://github.com/user-attachments/assets/1accec24-b34f-4b8f-9dcd-66111fc76f36" />
+---
 
 ## 这是什么？
 
