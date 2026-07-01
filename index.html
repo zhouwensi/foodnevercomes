@@ -81,7 +81,7 @@ footer{padding:40px 0 100px;text-align:center;color:var(--muted);font-size:.88re
 <body>
 <div id="bootErr" role="alert"></div>
 <div id="page">
-<div class="legal-bar" id="legalBar">⚠️ 纯娱乐解压体验：不提供真实外卖、支付或配送服务。所有订单与金额均为虚拟。<span id="buildTag" style="opacity:.55;font-size:.72rem;margin-left:6px">v20260705</span><button type="button" id="legalClose">知道了</button></div>
+<div class="legal-bar" id="legalBar">⚠️ 纯娱乐解压体验：不提供真实外卖、支付或配送服务。所有订单与金额均为虚拟。<span id="buildTag" style="opacity:.55;font-size:.72rem;margin-left:6px">v20260708</span><button type="button" id="legalClose">知道了</button></div>
 <nav><div class="wrap nav-inner">
   <div class="brand"><span class="logo">🍜</span><span>饭永远不来<small>虚拟多巴胺厨房</small></span></div>
   <div class="nav-links"><a href="#menu">美食大厅</a><a href="#how">怎么玩</a><a href="#about">说明</a><a href="#" id="navOrders">📜 订单</a><button type="button" class="nav-wechat" id="navWechat" style="padding:8px 14px;border-radius:999px;font-weight:700;font-size:.9rem;color:var(--muted)">📱 公众号</button></div>
@@ -230,24 +230,71 @@ function drawQR(ctx,text,x,y,size){if(typeof qrcode==="undefined")return;const q
 function _rr(c,x,y,w,h,r){c.beginPath();c.moveTo(x+r,y);c.arcTo(x+w,y,x+w,y+h,r);c.arcTo(x+w,y+h,x,y+h,r);c.arcTo(x,y+h,x,y,r);c.arcTo(x,y,x+w,y,r);c.closePath()}
 let wechatQRImg=null;
 function loadWechatQR(){return new Promise((res,rej)=>{if(wechatQRImg)return res(wechatQRImg);const img=new Image();img.onload=()=>{wechatQRImg=img;res(img)};img.onerror=rej;img.src=WECHAT_QR})}
+function _dashLine(c,x,y,w){c.save();c.strokeStyle="#CCCCCC";c.lineWidth=2;c.setLineDash([10,8]);c.beginPath();c.moveTo(x,y);c.lineTo(x+w,y);c.stroke();c.restore()}
+function _orderLines(order){
+  if(order.lines&&order.lines.length)return order.lines;
+  const out=[];
+  (order.items||"").split("、").forEach(s=>{const m=s.trim().match(/^(\d+)×(.+)$/);if(m)out.push({name:m[2].trim(),qty:+m[1],sub:"-"});else if(s.trim())out.push({name:s.trim(),qty:1,sub:"-"})});
+  return out.length?out:[{name:"虚拟外卖",qty:1,sub:order.total||"-"}];
+}
+function _receiptContentH(lines){
+  const itemH=50,optsExtra=28,qrSize=136;
+  let h=72+48+58+62+38+48+48+44+52+44+42;
+  lines.forEach(ln=>{h+=itemH+(ln.opts?optsExtra:0)});
+  h+=40+38*4+28+76+48+44+44+56+48+qrSize+36+30+38+34+48;
+  return h;
+}
 async function buildShareCard(order){
   try{await loadQRCodeLib()}catch(e){}
-  const W=1080,H=1980,cv=document.createElement("canvas");cv.width=W;cv.height=H;const c=cv.getContext("2d");
-  const g=c.createLinearGradient(0,0,0,H);g.addColorStop(0,"#FFF3F0");g.addColorStop(1,"#FFDCD0");c.fillStyle=g;c.fillRect(0,0,W,H);
-  c.textAlign="center";c.fillStyle="#43303A";c.font="800 64px PingFang SC,Microsoft YaHei,sans-serif";c.fillText((order.flag||"🍽️")+" 我的虚拟外卖",W/2,150);
-  c.font="700 32px PingFang SC,sans-serif";c.fillStyle="#9A8088";c.fillText((order.cuisine||"美食")+(order.no?" · "+order.no:""),W/2,210);
-  const emojis=order.emojis||["🍽️"];
-  const cols=emojis.length<=1?1:2,rows=Math.ceil(emojis.length/cols),cell=360,gap=24,gridY=260,areaX=(W-(cols*cell+(cols-1)*gap))/2;
-  emojis.forEach((em,i)=>{const col=i%cols,row=Math.floor(i/cols),dx=areaX+col*(cell+gap),dy=gridY+row*(cell+gap);c.save();_rr(c,dx,dy,cell,cell,36);c.fillStyle="#FFE7E1";c.fill();c.restore();c.font="180px system-ui";c.fillText(em,dx+cell/2,dy+cell/2+60)});
-  const sy=gridY+rows*(cell+gap)+60;
-  c.save();c.translate(W/2,sy);c.rotate(-0.04);_rr(c,-360,-65,720,130,70);c.fillStyle="#F25C54";c.fill();c.fillStyle="#fff";c.font="800 44px PingFang SC,sans-serif";c.textBaseline="middle";c.fillText("点了 "+(order.total||"一大桌")+" · 实付 ¥0 😌",0,0);c.restore();c.textBaseline="alphabetic";
-  c.font="800 38px PingFang SC,sans-serif";c.fillStyle="#2E7D5B";c.fillText("饭永远不来 🛵💨",W/2,sy+150);
-  const qrSize=170,qrY=H-520,gapX=100;
-  drawQR(c,SITE_URL,W/2-gapX-qrSize/2,qrY,qrSize);
-  try{const wx=await loadWechatQR();c.drawImage(wx,W/2+gapX-qrSize/2,qrY,qrSize,qrSize)}catch(e){drawQR(c,SITE_URL,W/2+gapX-qrSize/2,qrY,qrSize)}
-  c.font="700 26px PingFang SC,sans-serif";c.fillStyle="#9A8088";c.fillText("扫码开玩",W/2-gapX,qrY+qrSize+36);c.fillText(WECHAT_NAME,W/2+gapX,qrY+qrSize+36);
-  c.font="900 52px PingFang SC,sans-serif";c.fillStyle="#F25C54";c.fillText("饭永远不来",W/2,H-100);
-  c.font="700 30px PingFang SC,sans-serif";c.fillStyle="#9A8088";c.fillText("foodnevercomes.cn",W/2,H-52);
+  const W=1080,RX=100,RW=W-200,pad=RX+40,right=RX+RW-40,lines=_orderLines(order);
+  const FN="PingFang SC,Microsoft YaHei,sans-serif",itemH=50,optsExtra=28,qrSize=136,qrGap=36;
+  const receiptTop=36,contentTop=64,contentH=_receiptContentH(lines),receiptH=contentTop+contentH,canvasPad=48;
+  const H=receiptTop+receiptH+canvasPad;
+  const cv=document.createElement("canvas");cv.width=W;cv.height=H;const c=cv.getContext("2d");
+  c.fillStyle="#E8E8E8";c.fillRect(0,0,W,H);
+  c.save();c.shadowColor="rgba(0,0,0,0.14)";c.shadowBlur=28;c.shadowOffsetY=10;c.fillStyle="#FFFEF8";c.fillRect(RX,receiptTop,RW,receiptH);c.restore();
+  let y=receiptTop+contentTop;
+  c.fillStyle="#1a1a1a";c.textAlign="left";c.font="bold 54px "+FN;c.fillText("外卖单",pad,y);y+=72;
+  _dashLine(c,pad,y,RW-80);y+=48;
+  c.textAlign="center";c.font="bold 38px "+FN;c.fillText("* 饭永远不来虚拟厨房 *",W/2,y);y+=58;
+  c.font="bold 50px "+FN;c.fillText(order.no+" 虚拟外卖",W/2,y);y+=62;
+  c.textAlign="left";c.font="28px "+FN;c.fillStyle="#333";
+  c.fillText("下单时间: "+(order.date||""),pad,y);y+=38;
+  c.fillText("订单号: "+String(order.no||"").replace("#",""),pad,y);y+=48;
+  _dashLine(c,pad,y,RW-80);y+=44;
+  c.font="bold 34px "+FN;c.fillText("备注:饭永远不到，多巴胺先到",pad,y);y+=52;
+  _dashLine(c,pad,y,RW-80);y+=44;
+  c.font="bold 30px "+FN;c.fillText("品名",pad,y);c.textAlign="center";c.fillText("数量",pad+400,y);c.textAlign="right";c.fillText("小计",right,y);c.textAlign="left";y+=42;
+  c.font="28px "+FN;
+  lines.forEach((ln,i)=>{
+    const nm=(i+1)+"."+ln.name;
+    c.fillText(nm.length>16?nm.slice(0,15)+"…":nm,pad,y);
+    c.textAlign="center";c.fillText(String(ln.qty),pad+400,y);
+    c.textAlign="right";c.fillText(ln.sub||"-",right,y);c.textAlign="left";
+    if(ln.opts){c.font="22px "+FN;c.fillStyle="#666";const op="["+ln.opts+"]";c.fillText(op.length>28?op.slice(0,27)+"…":op,pad+16,y+30);c.fillStyle="#333";c.font="28px "+FN;y+=optsExtra}
+    y+=itemH;
+  });
+  _dashLine(c,pad,y,RW-80);y+=40;
+  function sumRow(lb,val){c.font="28px "+FN;c.textAlign="left";c.fillText(lb,pad,y);c.textAlign="right";c.fillText(val,right,y);c.textAlign="left";y+=38}
+  sumRow("打包费","0.0");sumRow("配送费",order.deliveryFee||"免配送");sumRow("总金额",order.subtotal||order.total||"0");
+  const disc=order.subtotal||order.total||"0";sumRow("优惠金额","-"+disc);
+  y+=28;
+  c.font="bold 54px "+FN;c.textAlign="left";c.fillText("实付金额",pad,y);c.textAlign="right";c.fillText("¥0.00",right,y);c.textAlign="left";y+=76;
+  _dashLine(c,pad,y,RW-80);y+=48;
+  c.font="bold 32px "+FN;c.textAlign="left";
+  const addr=order.addr||"虚拟地址 404 号";c.fillText(addr.length>22?addr.slice(0,21)+"…":addr,pad,y);y+=44;
+  c.fillText("食客(本人)",pad,y);y+=44;
+  c.fillText(order.phone||"138****4242",pad,y);y+=56;
+  _dashLine(c,pad,y,RW-80);y+=48;
+  const qrX1=Math.round((W-qrSize*2-qrGap)/2),qrX2=qrX1+qrSize+qrGap,qrY=y;
+  drawQR(c,SITE_URL,qrX1,qrY,qrSize);
+  try{const wx=await loadWechatQR();c.drawImage(wx,qrX2,qrY,qrSize,qrSize)}catch(e){drawQR(c,SITE_URL,qrX2,qrY,qrSize)}
+  c.font="22px "+FN;c.fillStyle="#888";c.textAlign="center";
+  c.fillText("扫码开玩",qrX1+qrSize/2,qrY+qrSize+30);
+  c.fillText(WECHAT_NAME.length>10?WECHAT_NAME.slice(0,10)+"…":WECHAT_NAME,qrX2+qrSize/2,qrY+qrSize+30);
+  y=qrY+qrSize+68;
+  c.fillText("打印时间: "+(order.printTime||order.date||""),W/2,y);
+  c.font="20px "+FN;c.fillText("foodnevercomes.cn · 纯娱乐虚拟外卖",W/2,y+34);
   return await new Promise(res=>cv.toBlob(res,"image/png"));
 }
 let sharePrep=null;
@@ -267,7 +314,7 @@ async function shareOrder(order){
   try{await navigator.clipboard.writeText(text);showToast("📸 图片已保存 · 文案已复制")}catch(e){showToast("📸 晒单图片已保存")}
   if(isBtn){btn.disabled=false;btn.textContent=orig}
 }
-function showSharePreview(order){prepareShare(order);shareSheet.innerHTML='<button class="x-btn" type="button" style="position:absolute;right:14px;top:14px" data-x>✕</button><h3>📸 分享你的虚拟外卖</h3><p style="color:var(--muted);font-weight:700;margin:12px 0">晒单图含网站码 + 公众号码，好友扫码一起玩</p><div id="sharePreview" style="min-height:200px;color:var(--muted);font-weight:700;padding:20px">生成中…</div><button class="btn btn-primary" type="button" id="doShare" style="width:100%;margin-top:12px">分享 / 保存图片</button>';shareSheet.querySelector("[data-x]").onclick=()=>{shareModal.classList.remove("show");overlay.classList.remove("show")};openModal(shareModal);buildShareCard(order).then(b=>{if(!b)return;const img=new Image();img.src=URL.createObjectURL(b);img.style.maxWidth="100%";img.style.borderRadius="16px";img.onload=()=>{sharePrep={file:new File([b],"share.png",{type:"image/png"}),text:shareText(order),order,no:order.no};document.getElementById("sharePreview").innerHTML="";document.getElementById("sharePreview").appendChild(img)};document.getElementById("doShare").onclick=()=>shareOrder()}).catch(()=>{document.getElementById("sharePreview").textContent="生成失败，请重试"})}
+function showSharePreview(order){prepareShare(order);shareSheet.innerHTML='<button class="x-btn" type="button" style="position:absolute;right:14px;top:14px" data-x>✕</button><h3>📸 分享你的虚拟外卖</h3><p style="color:var(--muted);font-weight:700;margin:12px 0">晒单图为外卖小票样式，含网站码 + 公众号码</p><div id="sharePreview" style="min-height:200px;color:var(--muted);font-weight:700;padding:20px">生成中…</div><button class="btn btn-primary" type="button" id="doShare" style="width:100%;margin-top:12px">分享 / 保存图片</button>';shareSheet.querySelector("[data-x]").onclick=()=>{shareModal.classList.remove("show");overlay.classList.remove("show")};openModal(shareModal);buildShareCard(order).then(b=>{if(!b)return;const img=new Image();img.src=URL.createObjectURL(b);img.style.maxWidth="100%";img.style.borderRadius="16px";img.onload=()=>{sharePrep={file:new File([b],"share.png",{type:"image/png"}),text:shareText(order),order,no:order.no};document.getElementById("sharePreview").innerHTML="";document.getElementById("sharePreview").appendChild(img)};document.getElementById("doShare").onclick=()=>shareOrder()}).catch(()=>{document.getElementById("sharePreview").textContent="生成失败，请重试"})}
 function esc(s){return String(s).replace(/&/g,"&amp;").replace(/"/g,"&quot;").replace(/</g,"&lt;")}
 function offerBlock(ctx,order){
   const dishes=((order&&order.dishes)||[]).filter(x=>RECIPES[x.id]);
@@ -398,7 +445,9 @@ function renderCheckout(){
 function placeOrder(){
   const total=money(grand()),itemsTxt=cart.map(c=>c.qty+"× "+c.name).join("、"),emojis=[...new Set(cart.map(c=>c.emoji))].slice(0,4);
   const dishes=cart.map(c=>({id:c.id,name:c.name}));
-  const order={no:"#FNC"+(1000+Math.floor(Math.random()*9000)),total,items:itemsTxt,emojis,dishes,done:false,durSecs:(2+Math.floor(Math.random()*3))*60,flag:country.flag,cuisine:country.cuisine,date:new Date().toLocaleString("zh-CN",{month:"numeric",day:"numeric",hour:"2-digit",minute:"2-digit"})};
+  const lines=cart.map(c=>({name:c.name,qty:c.qty,sub:money(c.cny*c.qty),opts:c.opts||""}));
+  const now=new Date();
+  const order={no:"#FNC"+(1000+Math.floor(Math.random()*9000)),total,items:itemsTxt,lines,subtotal:money(subtotal()),deliveryFee:fee()===0?"免配送":money(fee()),emojis,dishes,done:false,durSecs:(2+Math.floor(Math.random()*3))*60,flag:country.flag,cuisine:country.cuisine,date:now.toLocaleString("zh-CN",{month:"numeric",day:"numeric",hour:"2-digit",minute:"2-digit"}),addr:getAddr(),phone:"138****"+getCard4(),printTime:now.toLocaleString("zh-CN",{year:"numeric",month:"2-digit",day:"2-digit",hour:"2-digit",minute:"2-digit",second:"2-digit"}).replace(/\//g,"-")};
   cart.length=0;updatePill();renderCart();coModal.classList.remove("show");showFakePay(total,order);
 }
 function showFakePay(totalLabel,order){
