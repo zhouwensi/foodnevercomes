@@ -2,7 +2,11 @@
 <html lang="zh-CN">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="renderer" content="webkit">
+<meta name="x5-orientation" content="portrait">
+<meta name="x5-fullscreen" content="true">
 <title>饭永远不来 — 点了外卖，永远不到（解压多巴胺网站）</title>
 <meta name="description" content="饭永远不来：浏览全球美食、加购、结账、追踪骑手——全程免费虚拟体验。饭永远不到，多巴胺先到。纯娱乐解压，非真实外卖。">
 <meta name="theme-color" content="#F25C54">
@@ -24,8 +28,8 @@
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","name":"饭永远不来","url":"https://foodnevercomes.cn/","description":"虚拟外卖解压体验：加购、假支付、追踪骑手。饭永远不到，多巴胺先到。"}</script>
 <style>
 :root{--ground:#FFF1EC;--cream:#FFF9F5;--card:#FFF;--text:#43303A;--muted:#9A7C84;--accent:#F25C54;--accent-deep:#D8443D;--mint:#6FBF9A;--mint-soft:#E2F3EB;--yellow:#FFD36B;--pink:#FFDCE4;--line:#F4DAD0;--shadow:rgba(216,68,61,.16);--r-lg:32px;--r-md:22px;--r-sm:14px;--font-d:"PingFang SC","Hiragino Sans GB","Microsoft YaHei",ui-rounded,system-ui,sans-serif;--font-b:system-ui,"Segoe UI",Roboto,sans-serif}
-*{box-sizing:border-box}html{scroll-behavior:smooth;max-width:100%}body{margin:0;font-family:var(--font-b);color:var(--text);line-height:1.6;-webkit-font-smoothing:antialiased;padding-bottom:72px;background:radial-gradient(60% 50% at 12% 0%,#FFE3DB 0%,transparent 60%),radial-gradient(50% 40% at 100% 8%,var(--mint-soft) 0%,transparent 55%),radial-gradient(40% 40% at 90% 100%,#FFEFC9 0%,transparent 60%),var(--ground)}
-h1,h2,h3{font-family:var(--font-d);margin:0;font-weight:800;letter-spacing:-.01em;line-height:1.15}p{margin:0}a{color:inherit;text-decoration:none}:focus-visible{outline:3px solid var(--mint);outline-offset:3px;border-radius:6px}.wrap{width:min(1140px,92vw);margin-inline:auto}
+*{box-sizing:border-box}article,aside,footer,header,nav,section{display:block}html{scroll-behavior:smooth;max-width:100%;color-scheme:light}body{margin:0;font-family:var(--font-b);color:var(--text);line-height:1.6;-webkit-font-smoothing:antialiased;padding-bottom:72px;background:radial-gradient(60% 50% at 12% 0%,#FFE3DB 0%,transparent 60%),radial-gradient(50% 40% at 100% 8%,var(--mint-soft) 0%,transparent 55%),radial-gradient(40% 40% at 90% 100%,#FFEFC9 0%,transparent 60%),var(--ground)}#page{position:relative;z-index:1;min-height:50vh}
+h1,h2,h3{font-family:var(--font-d);margin:0;font-weight:800;letter-spacing:-.01em;line-height:1.15}p{margin:0}a{color:inherit;text-decoration:none}:focus-visible{outline:3px solid var(--mint);outline-offset:3px;border-radius:6px}.wrap{width:min(1140px,92vw);margin-left:auto;margin-right:auto}
 .legal-bar{background:linear-gradient(90deg,#FFF3F0,#FFE7E1);border-bottom:2px dashed var(--accent);padding:10px 16px;text-align:center;font-size:.84rem;font-weight:700;color:var(--accent-deep)}.legal-bar button{margin-left:10px;border:1.5px solid var(--line);background:#fff;border-radius:999px;padding:4px 12px;cursor:pointer;font-weight:800;font-size:.78rem}
 nav{position:sticky;top:0;z-index:60;background:rgba(255,241,236,.97);border-bottom:2px solid var(--line)}.nav-inner{display:flex;align-items:center;gap:12px;padding:13px 0;flex-wrap:wrap}.brand{display:flex;align-items:center;gap:10px;font-family:var(--font-d);font-weight:800;font-size:1.15rem}.brand .logo{width:42px;height:42px;border-radius:14px;display:grid;place-items:center;font-size:1.35rem;background:var(--accent);box-shadow:0 6px 0 var(--accent-deep);transform:rotate(-4deg)}.brand small{display:block;font-size:.58rem;letter-spacing:.2em;color:var(--muted);font-weight:700;text-transform:uppercase}
 .nav-links{display:flex;gap:4px;margin-left:auto;flex-wrap:wrap}.nav-links a{padding:8px 14px;border-radius:999px;font-weight:700;font-size:.9rem;color:var(--muted);transition:.2s}.nav-links a:hover{background:#fff;color:var(--text)}
@@ -52,29 +56,31 @@ section{padding:48px 0}.sec-head{text-align:center;max-width:60ch;margin:0 auto 
 .footer-wechat{display:flex;align-items:center;justify-content:center;gap:16px;margin:20px auto;max-width:420px;text-align:left;cursor:pointer;padding:14px 16px;border-radius:var(--r-md);border:2px solid var(--line);background:#fff;transition:.15s}.footer-wechat:hover{border-color:var(--accent);transform:translateY(-2px)}.footer-wechat img{width:80px;height:80px;border-radius:10px;object-fit:contain;flex:none;background:#fff;border:1px solid var(--line);padding:4px}.nav-wechat{background:none;border:none;font-family:inherit;cursor:pointer}
 .mob-nav{display:none;position:fixed;bottom:0;left:0;right:0;width:100%;z-index:65;background:#fff;border-top:2px solid var(--line);padding:8px 12px calc(8px + env(safe-area-inset-bottom));justify-content:space-around;align-items:center;-webkit-backface-visibility:hidden;backface-visibility:hidden}.mob-nav a,.mob-nav button{background:none;border:none;font-family:var(--font-d);font-weight:800;font-size:.72rem;color:var(--muted);display:flex;flex-direction:column;align-items:center;gap:2px;cursor:pointer;padding:6px 10px;border-radius:12px}.mob-nav a:hover,.mob-nav button:hover{color:var(--accent);background:var(--ground)}
 footer{padding:40px 0 100px;text-align:center;color:var(--muted);font-size:.88rem}footer .brand{justify-content:center;margin-bottom:10px}.fnote{max-width:58ch;margin:12px auto 0;line-height:1.7;font-size:.82rem}
-.cart-bar{position:fixed;left:50%;transform:translateX(-50%);bottom:78px;z-index:70;width:min(560px,calc(100% - 28px));background:var(--accent);color:#fff;border:none;cursor:pointer;font-family:var(--font-d);font-weight:800;padding:14px 20px;border-radius:16px;display:flex;align-items:center;justify-content:space-between;box-shadow:0 16px 36px -8px rgba(216,68,61,.55);transition:opacity .25s}.cart-bar.empty{opacity:0;pointer-events:none;transform:translateX(-50%) translateY(24px)}.cart-bar .count{background:rgba(255,255,255,.25);min-width:24px;height:24px;border-radius:7px;display:inline-grid;place-items:center;font-size:.85rem;padding:0 7px;margin-right:8px}
+.cart-bar{position:fixed;left:14px;right:14px;bottom:78px;z-index:70;max-width:560px;margin:0 auto;background:var(--accent);color:#fff;border:none;cursor:pointer;font-family:var(--font-d);font-weight:800;padding:14px 20px;border-radius:16px;display:flex;align-items:center;justify-content:space-between;box-shadow:0 16px 36px -8px rgba(216,68,61,.55);transition:opacity .25s,transform .25s;-webkit-transform:translateZ(0);transform:translateZ(0)}.cart-bar.empty{opacity:0;pointer-events:none;transform:translateY(24px)}.cart-bar .count{background:rgba(255,255,255,.25);min-width:24px;height:24px;border-radius:7px;display:inline-grid;place-items:center;font-size:.85rem;padding:0 7px;margin-right:8px}
 .overlay{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(67,48,58,.55);z-index:80;opacity:0;pointer-events:none;transition:opacity .25s}.overlay.show{display:block;opacity:1;pointer-events:auto}
-.drawer{position:fixed;top:0;right:0;height:100%;width:min(420px,92vw);z-index:85;background:var(--cream);border-left:3px solid var(--line);transform:translateX(110%);transition:transform .32s cubic-bezier(.3,1,.4,1);display:flex;flex-direction:column}.drawer.show{transform:translateX(0)}.drawer-head{padding:20px;display:flex;align-items:center;justify-content:space-between;border-bottom:2px dotted var(--line)}.drawer-body{flex:1;overflow-y:auto;padding:16px 20px}.drawer-foot{padding:18px 20px;border-top:2px dotted var(--line);background:#fff}
+.drawer{display:none;position:fixed;top:0;right:0;bottom:0;width:min(420px,92vw);z-index:85;background:var(--cream);border-left:3px solid var(--line);flex-direction:column;overflow:hidden}.drawer.show{display:flex}.drawer-head{padding:20px;display:flex;align-items:center;justify-content:space-between;border-bottom:2px dotted var(--line)}.drawer-body{flex:1;overflow-y:auto;padding:16px 20px}.drawer-foot{padding:18px 20px;border-top:2px dotted var(--line);background:#fff}
 .x-btn{border:none;background:#fff;cursor:pointer;width:38px;height:38px;border-radius:50%;font-size:1.1rem;box-shadow:0 4px 0 var(--line)}.ci{display:flex;gap:12px;background:#fff;border:2px solid var(--line);border-radius:var(--r-md);padding:10px;align-items:center;margin-bottom:10px}.ci-em{width:54px;height:54px;border-radius:14px;background:var(--mint-soft);display:grid;place-items:center;font-size:1.8rem;flex:none;overflow:hidden}.qty{display:flex;align-items:center;gap:8px;margin-top:6px}.qty button{width:24px;height:24px;border-radius:50%;border:2px solid var(--line);background:#fff;cursor:pointer;font-weight:800}
-.modal{display:none;position:fixed;top:0;left:0;right:0;bottom:0;z-index:88;place-items:center;padding:18px;opacity:0;pointer-events:none;transition:opacity .25s}.modal.show{display:grid;opacity:1;pointer-events:auto}.sheet{position:relative;width:min(460px,96vw);max-height:92vh;overflow-y:auto;background:var(--cream);border:3px solid var(--line);border-radius:var(--r-lg);box-shadow:0 30px 70px -20px rgba(67,48,58,.5);padding:24px;transform:translateY(16px) scale(.98);transition:transform .3s}.modal.show .sheet{transform:none}
+.modal{display:none;position:fixed;top:0;left:0;right:0;bottom:0;z-index:88;align-items:center;justify-content:center;padding:18px;opacity:0;pointer-events:none;transition:opacity .25s}.modal.show{display:flex;opacity:1;pointer-events:auto}.sheet{position:relative;width:min(460px,96vw);max-height:92vh;overflow-y:auto;background:var(--cream);border:3px solid var(--line);border-radius:var(--r-lg);box-shadow:0 30px 70px -20px rgba(67,48,58,.5);padding:24px}
 .co-block{background:#fff;border:1.5px solid var(--line);border-radius:16px;padding:14px;margin:12px 0}.co-row{display:flex;align-items:center;gap:12px}.co-ic{font-size:1.3rem;width:28px;text-align:center}.co-edit{margin-left:auto;background:none;border:none;color:var(--accent);font-weight:800;cursor:pointer;font-size:.82rem}.bl{display:flex;justify-content:space-between;margin:7px 0;font-weight:600}.bl-save{background:#eafaf0;color:#1a8f4c;font-weight:800;font-size:.8rem;border-radius:9px;padding:8px;margin-top:10px;text-align:center}
 .demo-note{background:var(--mint-soft);color:#2E7D5B;font-weight:700;font-size:.82rem;padding:10px 14px;border-radius:var(--r-sm);margin-bottom:14px}
 .cust-hero{text-align:center}.cust-hero .dish-em{font-size:4.5rem;margin:8px 0}.cust-group{border-top:1px solid var(--line);padding:12px 0}.cust-glabel{font-weight:800;margin-bottom:6px}.cust-opt{display:flex;align-items:center;gap:10px;padding:8px;cursor:pointer;border-radius:10px}.cust-opt.sel{background:#fff}.cust-foot{display:flex;gap:12px;margin-top:14px;align-items:center}.cust-qty{display:flex;align-items:center;gap:12px;border:1.5px solid var(--line);border-radius:12px;padding:8px 12px;background:#fff}.cust-add{flex:1}
 .fakemap{width:100%;height:auto;border-radius:20px;border:3px solid #fff;margin:6px 0}.eta-card{background:#fff;border:1.5px solid var(--line);border-radius:16px;padding:14px;margin:8px 0}.eta-big{font-family:var(--font-d);font-weight:800;font-size:1.1rem}.eta-mins{background:#16A085;color:#fff;font-family:var(--font-d);font-weight:800;font-size:1.3rem;border-radius:12px;padding:8px 13px}.eta-bar{height:8px;border-radius:99px;background:#F0E3DE;margin-top:12px;overflow:hidden}.eta-bar span{display:block;height:100%;width:5%;background:linear-gradient(90deg,var(--accent),var(--accent-deep));transition:width 1s linear}
 .rider-card{display:flex;align-items:center;gap:12px;background:#fff;border:1.5px solid var(--line);border-radius:16px;padding:11px 14px;margin-bottom:12px}.rider-av{width:42px;height:42px;border-radius:50%;background:var(--cream);display:grid;place-items:center;font-size:1.4rem}.stages{list-style:none;padding:0;margin:18px 0;text-align:left}.stages li{display:flex;gap:12px;align-items:center;color:var(--muted);font-weight:700;margin-bottom:12px}.stages li .sdot{width:28px;height:28px;border-radius:50%;background:#fff;border:2px solid var(--line);display:grid;place-items:center;flex:none}.stages li.done{color:var(--text)}.stages li.done .sdot{background:var(--mint);border-color:var(--mint);color:#fff}.stages li.active{color:var(--accent-deep)}.stages li.active .sdot{background:var(--accent);border-color:var(--accent);color:#fff}
 .delivered-badge{font-size:3rem}.tr-event{background:#FFF7EE;border:1px solid #F4E4CF;border-radius:10px;padding:8px 12px;margin:8px 0;font-weight:700;font-size:.82rem;color:#8a5a00;text-align:center}
-.toast{position:fixed;left:50%;bottom:90px;transform:translateX(-50%) translateY(160%);background:var(--text);color:#fff;font-weight:800;padding:13px 22px;border-radius:999px;z-index:90;transition:transform .35s cubic-bezier(.2,1.4,.4,1);max-width:92vw;text-align:center}.toast.show{transform:translateX(-50%) translateY(0)}
+.toast{position:fixed;left:14px;right:14px;bottom:90px;margin:0 auto;width:fit-content;max-width:calc(100% - 28px);transform:translateY(160%);background:var(--text);color:#fff;font-weight:800;padding:13px 22px;border-radius:999px;z-index:90;transition:transform .35s cubic-bezier(.2,1.4,.4,1);text-align:center}.toast.show{transform:translateY(0)}
+#bootErr{display:none;position:fixed;top:0;left:0;right:0;z-index:10000;background:#b00020;color:#fff;font-weight:800;font-size:.82rem;padding:10px 14px;text-align:center}
 .hist{margin-top:16px;border-top:2px dotted var(--line);padding-top:12px}.hist-row{display:grid;grid-template-columns:1fr auto;gap:2px 10px;width:100%;text-align:left;background:#fff;border:2px solid var(--line);border-radius:var(--r-sm);padding:8px 12px;margin-bottom:8px;font-weight:700;font-size:.85rem;cursor:pointer;font-family:inherit;color:inherit}.hist-row small{grid-column:1/-1;color:var(--muted);font-size:.72rem;font-weight:600}
-#splash{position:fixed;top:0;left:0;right:0;bottom:0;z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;background:var(--ground);transition:opacity .35s,visibility .35s}#splash.hide{opacity:0;visibility:hidden;pointer-events:none;display:none!important}.splash-fallback{font-size:clamp(72px,28vw,120px);line-height:1}.splash-brand{display:flex;align-items:center;gap:10px;font-family:var(--font-d);font-weight:800;font-size:1.4rem;margin-top:8px}.splash-tag{color:var(--muted);font-weight:700;font-size:.9rem}
-@media(max-width:860px){.hero-grid{grid-template-columns:1fr;text-align:center}.hero-cta,.eyebrow,.hero-stat{justify-content:center;display:flex;flex-direction:column;align-items:center}.nav-links{display:none}.mob-nav{display:flex;position:fixed;bottom:0;left:0;right:0;width:100%}body{padding-bottom:130px}.cart-bar{bottom:88px}}
+@media(max-width:860px){nav{position:relative;top:auto;z-index:10}.hero-grid{grid-template-columns:1fr;text-align:center}.hero-cta,.eyebrow,.hero-stat{justify-content:center;display:flex;flex-direction:column;align-items:center}.float-rider,.sticker{animation:none!important;transform:none!important}.nav-links{display:none}.mob-nav{display:flex;position:fixed;bottom:0;left:0;right:0;width:100%;-webkit-transform:translateZ(0);transform:translateZ(0)}body{padding-bottom:130px}.cart-bar{bottom:88px}}
 @media(max-width:720px){.steps3{grid-template-columns:1fr}.dod-card{flex-direction:column}.dod-img{max-width:none}.cuisine-grid{grid-template-columns:1fr 1fr;gap:12px}}
 @media(max-width:480px){.cuisine-grid{grid-template-columns:1fr}}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;scroll-behavior:auto}}
+.drawer:not(.show),.overlay:not(.show),.modal:not(.show){display:none!important;visibility:hidden!important;pointer-events:none!important}
 </style>
 </head>
 <body>
-<div id="splash" role="status"><div class="splash-fallback">🍜</div><div class="splash-brand"><span class="logo">🍜</span><span>饭永远不来</span></div><div class="splash-tag">厨房预热中…</div></div>
-<div class="legal-bar" id="legalBar">⚠️ 纯娱乐解压体验：不提供真实外卖、支付或配送服务。所有订单与金额均为虚拟。<button type="button" id="legalClose">知道了</button></div>
+<div id="bootErr" role="alert"></div>
+<div id="page">
+<div class="legal-bar" id="legalBar">⚠️ 纯娱乐解压体验：不提供真实外卖、支付或配送服务。所有订单与金额均为虚拟。<span id="buildTag" style="opacity:.55;font-size:.72rem;margin-left:6px">v20260702</span><button type="button" id="legalClose">知道了</button></div>
 <nav><div class="wrap nav-inner">
   <div class="brand"><span class="logo">🍜</span><span>饭永远不来<small>虚拟多巴胺厨房</small></span></div>
   <div class="nav-links"><a href="#menu">美食大厅</a><a href="#how">怎么玩</a><a href="#about">说明</a><a href="#" id="navOrders">📜 订单</a><button type="button" class="nav-wechat" id="navWechat" style="padding:8px 14px;border-radius:999px;font-weight:700;font-size:.9rem;color:var(--muted)">📱 公众号</button></div>
@@ -131,6 +137,7 @@ footer{padding:40px 0 100px;text-align:center;color:var(--muted);font-size:.88re
   </button>
   <p class="fnote">纯娱乐虚拟体验 · 无真实交易 · 无真实配送 · 独立运营 foodnevercomes.cn</p>
 </div></footer>
+</div>
 <nav class="mob-nav" aria-label="快捷导航">
   <a href="#menu"><span style="font-size:1.2rem">🍽️</span>美食</a>
   <a href="#how"><span style="font-size:1.2rem">🧠</span>玩法</a>
@@ -147,7 +154,6 @@ footer{padding:40px 0 100px;text-align:center;color:var(--muted);font-size:.88re
 <div class="modal" id="recipeModal"><div class="sheet" id="recipeSheet"></div></div>
 <div class="modal" id="wechatModal"><div class="sheet" id="wechatSheet"></div></div>
 <div class="toast" id="toast">🧡 已加入餐盘！</div>
-<script src="qrcode.min.js"></script>
 <script>
 const SITE_URL='https://foodnevercomes.cn/';
 const WECHAT_QR="images/wechat-qrcode.jpg";
@@ -214,11 +220,14 @@ function kcount(n){return n>=1000?(Math.round(n/100)/10).toString().replace(/\.0
 function wasPrice(cny,off){return money(Math.round(cny/(1-off/100)))}
 function pickRider(code,seed){const a=RIDERS[code]||RIDERS.CN;return a[_hash(String(seed||code))%a.length]}
 function pickCourier(seed){const h=_hash("c|"+String(seed));return h%10===0?COURIERS.filter(c=>c.rare)[h%2||0]:COURIERS[h%6]}
-function drawQR(ctx,text,x,y,size){const qr=qrcode(0,"M");qr.addData(text);qr.make();const n=qr.getModuleCount(),cell=size/n;ctx.fillStyle="#fff";ctx.fillRect(x-6,y-6,size+12,size+12);ctx.fillStyle="#43303A";for(let r=0;r<n;r++)for(let c=0;c<n;c++)if(qr.isDark(r,c))ctx.fillRect(x+c*cell,y+r*cell,cell+.2,cell+.2)}
+let qrLoad=null;
+function loadQRCodeLib(){if(typeof qrcode!=="undefined")return Promise.resolve();if(qrLoad)return qrLoad;qrLoad=new Promise((res,rej)=>{const s=document.createElement("script");s.src="qrcode.min.js";s.onload=res;s.onerror=()=>rej(new Error("qrcode"));document.body.appendChild(s)});return qrLoad}
+function drawQR(ctx,text,x,y,size){if(typeof qrcode==="undefined")return;const qr=qrcode(0,"M");qr.addData(text);qr.make();const n=qr.getModuleCount(),cell=size/n;ctx.fillStyle="#fff";ctx.fillRect(x-6,y-6,size+12,size+12);ctx.fillStyle="#43303A";for(let r=0;r<n;r++)for(let c=0;c<n;c++)if(qr.isDark(r,c))ctx.fillRect(x+c*cell,y+r*cell,cell+.2,cell+.2)}
 function _rr(c,x,y,w,h,r){c.beginPath();c.moveTo(x+r,y);c.arcTo(x+w,y,x+w,y+h,r);c.arcTo(x+w,y+h,x,y+h,r);c.arcTo(x,y+h,x,y,r);c.arcTo(x,y,x+w,y,r);c.closePath()}
 let wechatQRImg=null;
 function loadWechatQR(){return new Promise((res,rej)=>{if(wechatQRImg)return res(wechatQRImg);const img=new Image();img.onload=()=>{wechatQRImg=img;res(img)};img.onerror=rej;img.src=WECHAT_QR})}
 async function buildShareCard(order){
+  try{await loadQRCodeLib()}catch(e){}
   const W=1080,H=1980,cv=document.createElement("canvas");cv.width=W;cv.height=H;const c=cv.getContext("2d");
   const g=c.createLinearGradient(0,0,0,H);g.addColorStop(0,"#FFF3F0");g.addColorStop(1,"#FFDCD0");c.fillStyle=g;c.fillRect(0,0,W,H);
   c.textAlign="center";c.fillStyle="#43303A";c.font="800 64px PingFang SC,Microsoft YaHei,sans-serif";c.fillText((order.flag||"🍽️")+" 我的虚拟外卖",W/2,150);
@@ -410,14 +419,16 @@ function renderDelivered(order){
 (function(){const el=document.getElementById("cravingCount"),SEED=8888,PER=0.15,target=SEED+Math.floor(Date.now()/60000*PER)+loadOrders().length;let shown=target-50;const fmt=n=>n.toLocaleString("zh-CN");const tick=()=>{if(shown<target){shown+=Math.ceil((target-shown)/10);if(shown>target)shown=target;el.textContent=fmt(shown);requestAnimationFrame(tick)}};tick();window._bumpCount=()=>{shown++;el.textContent=fmt(shown)}})();
 document.getElementById("navShare").onclick=()=>{const o=loadOrders()[0];if(o)showSharePreview(o);else showToast("先下一单，再分享晒单 😋")};
 document.getElementById("legalClose").onclick=()=>document.getElementById("legalBar").style.display="none";
-(function dismissSplash(){function go(){const s=document.getElementById("splash");if(s){s.classList.add("hide");try{s.remove()}catch(e){}}}if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",go);else go();setTimeout(go,800)})();
 document.getElementById("mobShare").onclick=()=>document.getElementById("navShare").click();
 bindWechat();
+function showBootErr(msg){const el=document.getElementById("bootErr");if(!el)return;el.textContent=msg;el.style.display="block"}
+window.onerror=function(msg,src,line){showBootErr("页面出错："+msg+(line?" (行"+line+")":""));return false};
 function boot(){
 try{const saved=localStorage.getItem("fnc_cn_region");if(saved&&COUNTRIES.some(c=>c.code===saved))setCountry(saved);else setCountry("CN")}catch(e){setCountry("CN")}
 updatePill();renderMenu();renderTrending();renderDishOfDay();
+}catch(e){showBootErr("初始化失败："+(e&&e.message?e.message:String(e)))}
 }
-if(typeof qrcode!=="undefined")boot();else window.addEventListener("load",boot);
+if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",boot);else boot();
 
 </script>
 </body>
