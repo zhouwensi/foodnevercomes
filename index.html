@@ -68,19 +68,20 @@ footer{padding:40px 0 100px;text-align:center;color:var(--muted);font-size:.88re
 .rider-card{display:flex;align-items:center;gap:12px;background:#fff;border:1.5px solid var(--line);border-radius:16px;padding:11px 14px;margin-bottom:12px}.rider-av{width:42px;height:42px;border-radius:50%;background:var(--cream);display:grid;place-items:center;font-size:1.4rem}.stages{list-style:none;padding:0;margin:18px 0;text-align:left}.stages li{display:flex;gap:12px;align-items:center;color:var(--muted);font-weight:700;margin-bottom:12px}.stages li .sdot{width:28px;height:28px;border-radius:50%;background:#fff;border:2px solid var(--line);display:grid;place-items:center;flex:none}.stages li.done{color:var(--text)}.stages li.done .sdot{background:var(--mint);border-color:var(--mint);color:#fff}.stages li.active{color:var(--accent-deep)}.stages li.active .sdot{background:var(--accent);border-color:var(--accent);color:#fff}
 .delivered-badge{font-size:3rem}.tr-event{background:#FFF7EE;border:1px solid #F4E4CF;border-radius:10px;padding:8px 12px;margin:8px 0;font-weight:700;font-size:.82rem;color:#8a5a00;text-align:center}
 .toast{position:fixed;left:14px;right:14px;bottom:90px;margin:0 auto;width:fit-content;max-width:calc(100% - 28px);transform:translateY(160%);background:var(--text);color:#fff;font-weight:800;padding:13px 22px;border-radius:999px;z-index:90;transition:transform .35s cubic-bezier(.2,1.4,.4,1);text-align:center}.toast.show{transform:translateY(0)}
+.pay-layer{display:none;position:fixed;top:0;left:0;right:0;bottom:0;z-index:92;background:rgba(0,0,0,.52);align-items:flex-end;justify-content:center}.pay-layer.show{display:flex}.pay-sheet{width:100%;max-width:480px;background:#fff;border-radius:24px 24px 0 0;padding:22px 22px calc(22px + env(safe-area-inset-bottom));transform:translateY(100%);transition:transform .32s cubic-bezier(.3,1,.4,1)}.pay-layer.show .pay-sheet{transform:translateY(0)}.pay-head{text-align:center;font-family:var(--font-d);font-weight:800;font-size:1.02rem;color:var(--text)}.pay-amt{font-family:var(--font-d);font-size:2.6rem;font-weight:800;text-align:center;margin:10px 0 18px;color:var(--text)}.pay-merchant{display:flex;align-items:center;gap:12px;padding:14px;background:var(--ground);border-radius:14px;margin-bottom:14px;font-weight:700}.pay-status{text-align:center;padding:16px 0 8px}.pay-dots span{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--mint);margin:0 5px;animation:payDot 1s ease-in-out infinite}.pay-dots span:nth-child(2){animation-delay:.15s}.pay-dots span:nth-child(3){animation-delay:.3s}@keyframes payDot{0%,80%,100%{opacity:.25;transform:scale(.75)}40%{opacity:1;transform:scale(1)}}.pay-success{width:56px;height:56px;border-radius:50%;background:#eafaf0;color:#16A085;font-size:2rem;font-weight:800;line-height:56px;margin:0 auto}.pay-note{text-align:center;color:var(--muted);font-size:.76rem;font-weight:700;margin-top:12px}
 #bootErr{display:none;position:fixed;top:0;left:0;right:0;z-index:10000;background:#b00020;color:#fff;font-weight:800;font-size:.82rem;padding:10px 14px;text-align:center}
 .hist{margin-top:16px;border-top:2px dotted var(--line);padding-top:12px}.hist-row{display:grid;grid-template-columns:1fr auto;gap:2px 10px;width:100%;text-align:left;background:#fff;border:2px solid var(--line);border-radius:var(--r-sm);padding:8px 12px;margin-bottom:8px;font-weight:700;font-size:.85rem;cursor:pointer;font-family:inherit;color:inherit}.hist-row small{grid-column:1/-1;color:var(--muted);font-size:.72rem;font-weight:600}
 @media(max-width:860px){nav{position:relative;top:auto;z-index:10}.hero-grid{grid-template-columns:1fr;text-align:center}.hero-cta,.eyebrow,.hero-stat{justify-content:center;display:flex;flex-direction:column;align-items:center}.float-rider,.sticker{animation:none!important;transform:none!important}.nav-links{display:none}.mob-nav{display:flex;position:fixed;bottom:0;left:0;right:0;width:100%;-webkit-transform:translateZ(0);transform:translateZ(0)}body{padding-bottom:130px}.cart-bar{bottom:88px}}
 @media(max-width:720px){.steps3{grid-template-columns:1fr}.dod-card{flex-direction:column}.dod-img{max-width:none}.cuisine-grid{grid-template-columns:1fr 1fr;gap:12px}}
 @media(max-width:480px){.cuisine-grid{grid-template-columns:1fr}}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;scroll-behavior:auto}}
-.drawer:not(.show),.overlay:not(.show),.modal:not(.show){display:none!important;visibility:hidden!important;pointer-events:none!important}
+.drawer:not(.show),.overlay:not(.show),.modal:not(.show),.pay-layer:not(.show){display:none!important;visibility:hidden!important;pointer-events:none!important}
 </style>
 </head>
 <body>
 <div id="bootErr" role="alert"></div>
 <div id="page">
-<div class="legal-bar" id="legalBar">⚠️ 纯娱乐解压体验：不提供真实外卖、支付或配送服务。所有订单与金额均为虚拟。<span id="buildTag" style="opacity:.55;font-size:.72rem;margin-left:6px">v20260704</span><button type="button" id="legalClose">知道了</button></div>
+<div class="legal-bar" id="legalBar">⚠️ 纯娱乐解压体验：不提供真实外卖、支付或配送服务。所有订单与金额均为虚拟。<span id="buildTag" style="opacity:.55;font-size:.72rem;margin-left:6px">v20260705</span><button type="button" id="legalClose">知道了</button></div>
 <nav><div class="wrap nav-inner">
   <div class="brand"><span class="logo">🍜</span><span>饭永远不来<small>虚拟多巴胺厨房</small></span></div>
   <div class="nav-links"><a href="#menu">美食大厅</a><a href="#how">怎么玩</a><a href="#about">说明</a><a href="#" id="navOrders">📜 订单</a><button type="button" class="nav-wechat" id="navWechat" style="padding:8px 14px;border-radius:999px;font-weight:700;font-size:.9rem;color:var(--muted)">📱 公众号</button></div>
@@ -153,6 +154,7 @@ footer{padding:40px 0 100px;text-align:center;color:var(--muted);font-size:.88re
 <div class="modal" id="shareModal"><div class="sheet" id="shareSheet" style="text-align:center"></div></div>
 <div class="modal" id="recipeModal"><div class="sheet" id="recipeSheet"></div></div>
 <div class="modal" id="wechatModal"><div class="sheet" id="wechatSheet"></div></div>
+<div class="pay-layer" id="payLayer"><div class="pay-sheet" id="paySheet"></div></div>
 <div class="toast" id="toast">🧡 已加入餐盘！</div>
 <script>
 const SITE_URL='https://foodnevercomes.cn/';
@@ -211,6 +213,8 @@ const ADDR={CN:"馋嘴路 404 号 · 某某区",JP:"渋谷区 食欲 4-0-4",KR:"
 const RIDERS={CN:["小王","阿杰","美美","大刘"],JP:["Haruto","Yui"],KR:["Min-jun","Seo-yeon"],TH:["Somchai","Anong"],US:["Jacob","Emily"],IT:["Marco","Giulia"],IN:["Rahul","Priya"],MX:["Mateo","Sofía"]};
 const COURIERS=[{e:"🐢",n:"龟速Tony",l:"正在慢走你的订单…"},{e:"🐇",n:"兔子Hop",l:"全速冲刺中 💨"},{e:"🐌",n:"Gary蜗牛",l:"已出发，预计 3–5 业务年"},{e:"🐈",n:"猫咪Whiskers",l:"被纸箱吸引了 📦"},{e:"🐕",n:"狗狗Biscuit",l:"路上看到同类，稍等"},{e:"🦦",n:"水獭Otis",l:"仰泳配送中"},{e:"🚀",n:"火箭小哥",l:"再入大气层中 🚀",rare:1},{e:"🦄",n:"独角兽",l:"彩虹通道配送 🌈",rare:1}];
 const EVENTS=["在 imaginary 红灯前等待 🚦","停下来欣赏路过蜗牛 🐌","被纸箱吸引 📦","躲避 imaginary 大雨 🌧️","你的饭在评判人生选择 🥡","对鸭子按喇叭 🦆","抄近路（并没有更近）🧭","一根薯条试图逃跑 🍟","科学小憩 😴","和订单自拍 📸"];
+const KITCHEN_EVENTS=["翻炒中，锅气 imaginary 十足","加了一勺虚拟豆瓣酱","厨师尝了一口说「不错」","装盘倒计时…","后厨传来神秘香味 🔥"];
+const PICKUP_FRAC=0.45;
 let country=COUNTRIES[0],activeFilter="all",searchTerm="";
 function parseDish(co,d,i){return{name:d[0].trim(),emoji:d[1],base:d[2],cat:d[3],tpl:d[4],badge:d[5],id:co.code+"-"+i,flag:co.flag,cuisine:co.cuisine}}
 function money(cny){const v=cny*country.rate;if(country.dec===0)return country.sym+Math.round(v).toLocaleString();return country.sym+Number(v.toFixed(country.dec)).toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2})}
@@ -282,13 +286,13 @@ function openRecipe(d){
   recipeSheet.querySelector("#rcpBack").onclick=()=>{closeRecipe();document.getElementById("menu").scrollIntoView({behavior:"smooth"})};
   openModal(recipeModal);
 }
-function closeRecipe(){recipeModal.classList.remove("show");const behind=trModal.classList.contains("show")||coModal.classList.contains("show")||drawer.classList.contains("show")||shareModal.classList.contains("show")||wechatModal.classList.contains("show")||custModal.classList.contains("show");if(!behind)overlay.classList.remove("show")}
+function closeRecipe(){recipeModal.classList.remove("show");const behind=trModal.classList.contains("show")||coModal.classList.contains("show")||drawer.classList.contains("show")||shareModal.classList.contains("show")||wechatModal.classList.contains("show")||custModal.classList.contains("show")||payLayer.classList.contains("show");if(!behind)overlay.classList.remove("show")}
 function openWechatModal(){wechatSheet.innerHTML='<button class="x-btn" type="button" style="position:absolute;right:14px;top:14px" data-x>✕</button><h3 style="text-align:center">'+WECHAT_NAME+'</h3><p style="color:var(--muted);font-weight:700;text-align:center;margin:10px 0">更多有趣网站 · 玩完虚拟外卖不妨看看</p><img src="'+WECHAT_QR+'" alt="'+WECHAT_NAME+'二维码" style="max-width:200px;width:72%;display:block;margin:0 auto;border-radius:12px;border:2px solid var(--line);background:#fff"><p style="text-align:center;color:var(--muted);font-size:.82rem;font-weight:700;margin-top:12px">微信扫一扫 · 或搜一搜「'+WECHAT_NAME+'」</p>';wechatSheet.querySelector("[data-x]").onclick=closeWechat;openModal(wechatModal)}
 function bindWechat(){["navWechat","footerWechat","mobWechat"].forEach(id=>{const el=document.getElementById(id);if(el)el.onclick=e=>{e&&e.preventDefault();openWechatModal()}})}
 function closeWechat(){wechatModal.classList.remove("show");if(!anyModalOpen())overlay.classList.remove("show")}
-function anyModalOpen(){return trModal.classList.contains("show")||coModal.classList.contains("show")||drawer.classList.contains("show")||shareModal.classList.contains("show")||custModal.classList.contains("show")||recipeModal.classList.contains("show")||wechatModal.classList.contains("show")}
+function anyModalOpen(){return trModal.classList.contains("show")||coModal.classList.contains("show")||drawer.classList.contains("show")||shareModal.classList.contains("show")||custModal.classList.contains("show")||recipeModal.classList.contains("show")||wechatModal.classList.contains("show")||payLayer.classList.contains("show")}
 const cart=[],ORDERS_KEY="fnc_cn_orders";
-const overlay=document.getElementById("overlay"),drawer=document.getElementById("cartDrawer"),coModal=document.getElementById("checkoutModal"),coSheet=document.getElementById("checkoutSheet"),trModal=document.getElementById("trackModal"),trSheet=document.getElementById("trackSheet"),custModal=document.getElementById("custModal"),custSheet=document.getElementById("custSheet"),shareModal=document.getElementById("shareModal"),shareSheet=document.getElementById("shareSheet"),recipeModal=document.getElementById("recipeModal"),recipeSheet=document.getElementById("recipeSheet"),wechatModal=document.getElementById("wechatModal"),wechatSheet=document.getElementById("wechatSheet"),pill=document.getElementById("cartPill");
+const overlay=document.getElementById("overlay"),drawer=document.getElementById("cartDrawer"),coModal=document.getElementById("checkoutModal"),coSheet=document.getElementById("checkoutSheet"),trModal=document.getElementById("trackModal"),trSheet=document.getElementById("trackSheet"),custModal=document.getElementById("custModal"),custSheet=document.getElementById("custSheet"),shareModal=document.getElementById("shareModal"),shareSheet=document.getElementById("shareSheet"),recipeModal=document.getElementById("recipeModal"),recipeSheet=document.getElementById("recipeSheet"),wechatModal=document.getElementById("wechatModal"),wechatSheet=document.getElementById("wechatSheet"),payLayer=document.getElementById("payLayer"),paySheet=document.getElementById("paySheet"),pill=document.getElementById("cartPill");
 let trackTimer=null;
 function loadOrders(){try{return JSON.parse(localStorage.getItem(ORDERS_KEY))||[]}catch(e){return[]}}
 function saveOrder(o){const a=loadOrders();a.unshift(o);try{localStorage.setItem(ORDERS_KEY,JSON.stringify(a.slice(0,20)))}catch(e){}}
@@ -377,7 +381,7 @@ function renderCart(){
 function wireHistory(){const ch=document.getElementById("clrHist");if(ch)ch.onclick=()=>{localStorage.removeItem(ORDERS_KEY);renderCart();updatePill()};document.querySelectorAll("[data-reopen]").forEach(b=>b.onclick=()=>{const o=loadOrders()[+b.dataset.reopen];if(!o)return;drawer.classList.remove("show");o.done?renderDelivered(o):startTracking(o.total,o)})}
 function openDrawer(){renderCart();overlay.classList.add("show");drawer.classList.add("show")}
 function openModal(el){overlay.classList.add("show");el.classList.add("show")}
-function closeAll(){if(trackTimer){clearInterval(trackTimer);trackTimer=null}overlay.classList.remove("show");drawer.classList.remove("show");coModal.classList.remove("show");trModal.classList.remove("show");custModal.classList.remove("show");shareModal.classList.remove("show");recipeModal.classList.remove("show");wechatModal.classList.remove("show")}
+function closeAll(){if(trackTimer){clearInterval(trackTimer);trackTimer=null}overlay.classList.remove("show");drawer.classList.remove("show");coModal.classList.remove("show");trModal.classList.remove("show");custModal.classList.remove("show");shareModal.classList.remove("show");recipeModal.classList.remove("show");wechatModal.classList.remove("show");payLayer.classList.remove("show")}
 pill.onclick=openDrawer;document.getElementById("navOrders").onclick=e=>{e.preventDefault();openDrawer()};
 overlay.onclick=closeAll;document.querySelectorAll("[data-close]").forEach(b=>b.onclick=closeAll);document.addEventListener("keydown",e=>{if(e.key==="Escape")closeAll()});
 function openCheckout(){if(!cart.length)return;drawer.classList.remove("show");renderCheckout();openModal(coModal)}
@@ -394,19 +398,52 @@ function renderCheckout(){
 function placeOrder(){
   const total=money(grand()),itemsTxt=cart.map(c=>c.qty+"× "+c.name).join("、"),emojis=[...new Set(cart.map(c=>c.emoji))].slice(0,4);
   const dishes=cart.map(c=>({id:c.id,name:c.name}));
-  const order={no:"#FNC"+(1000+Math.floor(Math.random()*9000)),total,items:itemsTxt,emojis,dishes,done:false,placedAt:Date.now(),durSecs:(2+Math.floor(Math.random()*3))*60,flag:country.flag,cuisine:country.cuisine,date:new Date().toLocaleString("zh-CN",{month:"numeric",day:"numeric",hour:"2-digit",minute:"2-digit"})};
-  saveOrder(order);cart.length=0;updatePill();renderCart();coModal.classList.remove("show");startTracking(total,order);window._bumpCount&&window._bumpCount();
+  const order={no:"#FNC"+(1000+Math.floor(Math.random()*9000)),total,items:itemsTxt,emojis,dishes,done:false,durSecs:(2+Math.floor(Math.random()*3))*60,flag:country.flag,cuisine:country.cuisine,date:new Date().toLocaleString("zh-CN",{month:"numeric",day:"numeric",hour:"2-digit",minute:"2-digit"})};
+  cart.length=0;updatePill();renderCart();coModal.classList.remove("show");showFakePay(total,order);
+}
+function showFakePay(totalLabel,order){
+  const card4=getCard4();
+  paySheet.innerHTML='<div class="pay-head">饭永远不来 · 虚拟收银台</div><div class="pay-amt">'+totalLabel+'</div><div class="pay-merchant"><span style="font-size:1.4rem">🍜</span><div><b>饭永远不来虚拟厨房</b><br><small style="color:var(--muted);font-weight:700">💳 虚拟卡 ·••• '+card4+'</small></div></div><div class="pay-status" id="payStatus"><div class="pay-dots"><span></span><span></span><span></span></div><p style="margin-top:14px;font-weight:800;color:var(--muted)">免密支付中…</p></div><p class="pay-note">纯娱乐 · 不会真扣款 · 实付 '+country.sym+'0</p>';
+  payLayer.classList.add("show");
+  setTimeout(function(){
+    paySheet.querySelector("#payStatus").innerHTML='<div class="pay-success">✓</div><p style="font-family:var(--font-d);font-weight:800;font-size:1.15rem;color:#16A085;margin-top:8px">支付成功</p><p style="color:var(--muted);font-weight:700;font-size:.88rem;margin-top:4px">实付 '+country.sym+'0 · 钱包毫发无损 😌</p>';
+    try{if(navigator.vibrate)navigator.vibrate(40)}catch(e){}
+    setTimeout(function(){
+      payLayer.classList.remove("show");
+      order.placedAt=Date.now();
+      saveOrder(order);
+      startTracking(totalLabel,order);
+      if(window._bumpCount)window._bumpCount();
+    },750);
+  },1300);
 }
 function startTracking(totalLabel,order){
   const orderNo=order.no;if(!order.durSecs)order.durSecs=(2+Math.floor(Math.random()*3))*60;if(!order.placedAt)order.placedAt=Date.now();
   const totalSecs=order.durSecs,courier=pickCourier(orderNo),remainingNow=()=>Math.max(0,totalSecs-Math.floor((Date.now()-order.placedAt)/1000));
   if(remainingNow()<=0){markOrderDone(orderNo);renderDelivered(order);return}
-  const etaMin=Math.max(1,Math.round(remainingNow()/60)),STAGES=[[0,"订单已确认","✅"],[0.1,"厨房正在做（ imaginary ）","🍳"],[0.45,"骑手已取餐","🛵"],[0.82,"即将送达","🏠"]];
-  trSheet.innerHTML='<button class="x-btn" type="button" id="trClose" style="position:absolute;right:14px;top:14px">✕</button><h3>'+courier.e+' 配送中</h3><p style="color:var(--muted);font-weight:700">订单 '+orderNo+' · 「已付」'+totalLabel+'</p>'+offerBlock("wait",order)+'<svg class="fakemap" viewBox="0 0 360 220"><rect width="360" height="220" fill="#EAEDED"/><path d="M42,180 L110,120 L246,66 L316,50" fill="none" stroke="#fff" stroke-width="9"/><path id="trRoad" d="M42,180 L110,120 L246,66 L316,50" fill="none" stroke="#F25C54" stroke-width="5"/><text id="trRider" x="42" y="180" font-size="20">'+courier.e+'</text></svg><div class="eta-card"><div style="display:flex;justify-content:space-between;align-items:center"><div><div class="eta-big">约 '+etaMin+' 分钟送达</div><div style="color:var(--muted);font-size:.78rem;font-weight:700">剩余 <span id="trTime">--:--</span></div></div><div class="eta-mins">'+etaMin+'<small style="font-size:.55rem">分钟</small></div></div><div class="eta-bar"><span id="trBar"></span></div></div><div class="rider-card"><div class="rider-av">'+courier.e+'</div><div><b>'+courier.n+(courier.rare?" ✨稀有":"")+'</b><br><small>'+courier.l+'</small></div></div><div class="tr-event" id="trEvent"></div><ul class="stages" id="trStages">'+STAGES.map((s,i)=>'<li data-i="'+i+'"><span class="sdot">'+s[2]+'</span>'+s[1]+'</li>').join("")+'</ul><button class="btn btn-primary" type="button" id="trShare" style="width:100%">📸 分享晒单（双二维码）</button><button class="btn btn-ghost" type="button" id="trPreview" style="width:100%;margin-top:8px">预览晒单图</button>';
+  const etaMin=Math.max(1,Math.round(remainingNow()/60)),STAGES=[[0,"订单已确认","✅"],[0.1,"厨房正在做（ imaginary ）","🍳"],[PICKUP_FRAC,"骑手已取餐","🛵"],[0.82,"即将送达","🏠"]];
+  trSheet.innerHTML='<button class="x-btn" type="button" id="trClose" style="position:absolute;right:14px;top:14px">✕</button><h3 id="trTitle">厨房备餐中 🍳</h3><p style="color:var(--muted);font-weight:700">订单 '+orderNo+' · 「已付」'+totalLabel+'</p>'+offerBlock("wait",order)+'<svg class="fakemap" viewBox="0 0 360 220"><rect width="360" height="220" fill="#EAEDED"/><text x="28" y="194" font-size="14">🏪</text><text x="296" y="54" font-size="14">🏠</text><path d="M42,180 L110,120 L246,66 L316,50" fill="none" stroke="#ccc" stroke-width="5" stroke-dasharray="8 6"/><path id="trRoad" d="M42,180 L110,120 L246,66 L316,50" fill="none" stroke="#F25C54" stroke-width="5" stroke-linecap="round"/><text id="trRider" x="42" y="180" font-size="20">'+courier.e+'</text></svg><div class="eta-card"><div style="display:flex;justify-content:space-between;align-items:center"><div><div class="eta-big" id="trEta">厨房备餐中…</div><div style="color:var(--muted);font-size:.78rem;font-weight:700">剩余 <span id="trTime">--:--</span></div></div><div class="eta-mins">'+etaMin+'<small style="font-size:.55rem">分钟</small></div></div><div class="eta-bar"><span id="trBar"></span></div></div><div class="rider-card"><div class="rider-av">'+courier.e+'</div><div><b>'+courier.n+(courier.rare?" ✨稀有":"")+'</b><br><small id="riderSub">在餐厅等待出餐…</small></div></div><div class="tr-event" id="trEvent"></div><ul class="stages" id="trStages">'+STAGES.map((s,i)=>'<li data-i="'+i+'"><span class="sdot">'+s[2]+'</span>'+s[1]+'</li>').join("")+'</ul><button class="btn btn-primary" type="button" id="trShare" style="width:100%">📸 分享晒单（双二维码）</button><button class="btn btn-ghost" type="button" id="trPreview" style="width:100%;margin-top:8px">预览晒单图</button>';
   openModal(trModal);prepareShare(order);wireRecipeOffers(trSheet);
   trSheet.querySelector("#trClose").onclick=closeAll;trSheet.querySelector("#trShare").onclick=()=>shareOrder(order);trSheet.querySelector("#trPreview").onclick=()=>showSharePreview(order);
-  const rider=trSheet.querySelector("#trRider"),timeEl=trSheet.querySelector("#trTime"),lis=[...trSheet.querySelectorAll("#trStages li")],evEl=trSheet.querySelector("#trEvent"),road=trSheet.querySelector("#trRoad"),roadLen=road?road.getTotalLength():0;
-  function paint(){const rem=remainingNow(),frac=1-rem/totalSecs;timeEl.textContent=String(Math.floor(rem/60)).padStart(2,"0")+":"+String(rem%60).padStart(2,"0");const bar=trSheet.querySelector("#trBar");if(bar)bar.style.width=Math.max(5,Math.min(100,Math.round(frac*100)))+"%";if(evEl){const el=totalSecs-rem;evEl.textContent="📍 "+courier.n+" "+EVENTS[Math.floor(el/11)%EVENTS.length]}if(roadLen){const pt=road.getPointAtLength(Math.max(0,Math.min(1,frac))*roadLen);rider.setAttribute("x",pt.x);rider.setAttribute("y",pt.y)}let active=0;STAGES.forEach((s,i)=>{if(frac>=s[0])active=i});lis.forEach((li,i)=>{li.classList.toggle("done",i<active);li.classList.toggle("active",i===active)})}
+  const rider=trSheet.querySelector("#trRider"),timeEl=trSheet.querySelector("#trTime"),lis=[...trSheet.querySelectorAll("#trStages li")],evEl=trSheet.querySelector("#trEvent"),road=trSheet.querySelector("#trRoad"),roadLen=road?road.getTotalLength():0,titleEl=trSheet.querySelector("#trTitle"),etaEl=trSheet.querySelector("#trEta"),subEl=trSheet.querySelector("#riderSub");
+  let pickedToast=false;
+  function paint(){
+    const rem=remainingNow(),frac=1-rem/totalSecs,onRoad=frac>=PICKUP_FRAC;
+    timeEl.textContent=String(Math.floor(rem/60)).padStart(2,"0")+":"+String(rem%60).padStart(2,"0");
+    const bar=trSheet.querySelector("#trBar");if(bar)bar.style.width=Math.max(2,Math.min(100,Math.round(frac*100)))+"%";
+    if(!pickedToast&&onRoad){pickedToast=true;showToast("🛵 "+courier.n+" 已取餐，上路！");try{if(navigator.vibrate)navigator.vibrate([30,40,30])}catch(e){}}
+    let active=0;STAGES.forEach((s,i)=>{if(frac>=s[0])active=i});
+    if(titleEl){if(!onRoad)titleEl.textContent=active<2?"厨房备餐中 🍳":courier.e+" 等待取餐";else if(frac<0.82)titleEl.textContent=courier.e+" 配送中";else titleEl.textContent=courier.e+" 即将送达"}
+    if(etaEl)etaEl.textContent=onRoad?("约 "+Math.max(1,Math.round(rem/60))+" 分钟送达"):"厨房备餐中…";
+    if(subEl)subEl.textContent=onRoad?courier.l:"在餐厅等待出餐…";
+    if(evEl){const el=totalSecs-rem;evEl.textContent=onRoad?("📍 "+courier.n+" "+EVENTS[Math.floor(el/11)%EVENTS.length]):("🍳 厨房 · "+KITCHEN_EVENTS[Math.floor(el/8)%KITCHEN_EVENTS.length])}
+    if(roadLen){
+      road.style.strokeDasharray=roadLen;
+      if(!onRoad){road.style.strokeDashoffset=roadLen;const pt=road.getPointAtLength(0);rider.setAttribute("x",pt.x-8);rider.setAttribute("y",pt.y-6)}
+      else{const roadFrac=(frac-PICKUP_FRAC)/(1-PICKUP_FRAC);road.style.strokeDashoffset=roadLen*(1-roadFrac);const pt=road.getPointAtLength(Math.max(0,Math.min(1,roadFrac))*roadLen);rider.setAttribute("x",pt.x);rider.setAttribute("y",pt.y)}
+    }
+    lis.forEach((li,i)=>{li.classList.toggle("done",i<active);li.classList.toggle("active",i===active)});
+  }
   paint();if(trackTimer)clearInterval(trackTimer);trackTimer=setInterval(()=>{if(remainingNow()<=0){clearInterval(trackTimer);trackTimer=null;markOrderDone(orderNo);renderCart();renderDelivered(order);return}paint()},1000);
 }
 function renderDelivered(order){
