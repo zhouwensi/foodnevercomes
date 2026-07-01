@@ -80,7 +80,7 @@ footer{padding:40px 0 100px;text-align:center;color:var(--muted);font-size:.88re
 <body>
 <div id="bootErr" role="alert"></div>
 <div id="page">
-<div class="legal-bar" id="legalBar">⚠️ 纯娱乐解压体验：不提供真实外卖、支付或配送服务。所有订单与金额均为虚拟。<span id="buildTag" style="opacity:.55;font-size:.72rem;margin-left:6px">v20260702</span><button type="button" id="legalClose">知道了</button></div>
+<div class="legal-bar" id="legalBar">⚠️ 纯娱乐解压体验：不提供真实外卖、支付或配送服务。所有订单与金额均为虚拟。<span id="buildTag" style="opacity:.55;font-size:.72rem;margin-left:6px">v20260703</span><button type="button" id="legalClose">知道了</button></div>
 <nav><div class="wrap nav-inner">
   <div class="brand"><span class="logo">🍜</span><span>饭永远不来<small>虚拟多巴胺厨房</small></span></div>
   <div class="nav-links"><a href="#menu">美食大厅</a><a href="#how">怎么玩</a><a href="#about">说明</a><a href="#" id="navOrders">📜 订单</a><button type="button" class="nav-wechat" id="navWechat" style="padding:8px 14px;border-radius:999px;font-weight:700;font-size:.9rem;color:var(--muted)">📱 公众号</button></div>
@@ -424,8 +424,12 @@ bindWechat();
 function showBootErr(msg){const el=document.getElementById("bootErr");if(!el)return;el.textContent=msg;el.style.display="block"}
 window.onerror=function(msg,src,line){showBootErr("页面出错："+msg+(line?" (行"+line+")":""));return false};
 function boot(){
-try{const saved=localStorage.getItem("fnc_cn_region");if(saved&&COUNTRIES.some(c=>c.code===saved))setCountry(saved);else setCountry("CN")}catch(e){setCountry("CN")}
-updatePill();renderMenu();renderTrending();renderDishOfDay();
+try{
+  let saved=null;
+  try{saved=localStorage.getItem("fnc_cn_region")}catch(e){}
+  if(saved&&COUNTRIES.some(c=>c.code===saved))setCountry(saved);
+  else setCountry("CN");
+  updatePill();renderMenu();renderTrending();renderDishOfDay();
 }catch(e){showBootErr("初始化失败："+(e&&e.message?e.message:String(e)))}
 }
 if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",boot);else boot();
