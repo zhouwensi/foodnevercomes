@@ -80,7 +80,7 @@ footer{padding:40px 0 100px;text-align:center;color:var(--muted);font-size:.88re
 <body>
 <div id="bootErr" role="alert"></div>
 <div id="page">
-<div class="legal-bar" id="legalBar">⚠️ 纯娱乐解压体验：不提供真实外卖、支付或配送服务。所有订单与金额均为虚拟。<span id="buildTag" style="opacity:.55;font-size:.72rem;margin-left:6px">v20260703</span><button type="button" id="legalClose">知道了</button></div>
+<div class="legal-bar" id="legalBar">⚠️ 纯娱乐解压体验：不提供真实外卖、支付或配送服务。所有订单与金额均为虚拟。<span id="buildTag" style="opacity:.55;font-size:.72rem;margin-left:6px">v20260704</span><button type="button" id="legalClose">知道了</button></div>
 <nav><div class="wrap nav-inner">
   <div class="brand"><span class="logo">🍜</span><span>饭永远不来<small>虚拟多巴胺厨房</small></span></div>
   <div class="nav-links"><a href="#menu">美食大厅</a><a href="#how">怎么玩</a><a href="#about">说明</a><a href="#" id="navOrders">📜 订单</a><button type="button" class="nav-wechat" id="navWechat" style="padding:8px 14px;border-radius:999px;font-weight:700;font-size:.9rem;color:var(--muted)">📱 公众号</button></div>
@@ -212,7 +212,7 @@ const RIDERS={CN:["小王","阿杰","美美","大刘"],JP:["Haruto","Yui"],KR:["
 const COURIERS=[{e:"🐢",n:"龟速Tony",l:"正在慢走你的订单…"},{e:"🐇",n:"兔子Hop",l:"全速冲刺中 💨"},{e:"🐌",n:"Gary蜗牛",l:"已出发，预计 3–5 业务年"},{e:"🐈",n:"猫咪Whiskers",l:"被纸箱吸引了 📦"},{e:"🐕",n:"狗狗Biscuit",l:"路上看到同类，稍等"},{e:"🦦",n:"水獭Otis",l:"仰泳配送中"},{e:"🚀",n:"火箭小哥",l:"再入大气层中 🚀",rare:1},{e:"🦄",n:"独角兽",l:"彩虹通道配送 🌈",rare:1}];
 const EVENTS=["在 imaginary 红灯前等待 🚦","停下来欣赏路过蜗牛 🐌","被纸箱吸引 📦","躲避 imaginary 大雨 🌧️","你的饭在评判人生选择 🥡","对鸭子按喇叭 🦆","抄近路（并没有更近）🧭","一根薯条试图逃跑 🍟","科学小憩 😴","和订单自拍 📸"];
 let country=COUNTRIES[0],activeFilter="all",searchTerm="";
-function parseDish(co,d,i){return{name:d[0].trim(),emoji:d[1],base:d[2],cat:d[3],tpl:d[4],badge:d[5],id:co.code+"-"+i}}
+function parseDish(co,d,i){return{name:d[0].trim(),emoji:d[1],base:d[2],cat:d[3],tpl:d[4],badge:d[5],id:co.code+"-"+i,flag:co.flag,cuisine:co.cuisine}}
 function money(cny){const v=cny*country.rate;if(country.dec===0)return country.sym+Math.round(v).toLocaleString();return country.sym+Number(v.toFixed(country.dec)).toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2})}
 function _hash(s){let h=5381;for(let i=0;i<s.length;i++)h=((h<<5)+h+s.charCodeAt(i))>>>0;return h}
 function dishMeta(id){const h=_hash(id);return{rating:((40+h%9)/10).toFixed(1),count:(h>>>3)%2?200+((h>>>4)%3300):1100+((h>>>4)%9000),off:[10,15,20,25,30,40][h%6]}}
@@ -350,7 +350,7 @@ function renderMenu(){
 function dishOfDay(){const day=Math.floor(Date.now()/86400000),all=[];COUNTRIES.forEach(co=>DISHES[co.code].forEach((d,i)=>all.push({co,d,i})));const p=all[day%all.length];return parseDish(p.co,p.d,p.i)}
 function renderDishOfDay(){
   const d=dishOfDay(),wrap=document.getElementById("dishOfDayWrap"),hasR=!!RECIPES[d.id];
-  wrap.innerHTML='<div class="dod-card"><div class="dod-img"><span style="font-size:5rem;line-height:1">'+d.emoji+'</span>'+(hasR?'<button class="recipe-btn" type="button">📖 食谱</button>':"")+'</div><div class="dod-body"><span class="dod-tag">🎰 今日推荐</span><h3>'+d.co.flag+" "+d.name+'</h3><p>'+DESCS[d.tpl]+'</p><div class="dod-foot"><span class="dod-price" style="font-family:var(--font-d);font-weight:800;font-size:1.2rem">'+money(d.base)+'</span><button class="btn btn-primary" type="button">想吃 →</button></div></div></div>';
+  wrap.innerHTML='<div class="dod-card"><div class="dod-img"><span style="font-size:5rem;line-height:1">'+d.emoji+'</span>'+(hasR?'<button class="recipe-btn" type="button">📖 食谱</button>':"")+'</div><div class="dod-body"><span class="dod-tag">🎰 今日推荐</span><h3>'+d.flag+" "+d.name+'</h3><p>'+DESCS[d.tpl]+'</p><div class="dod-foot"><span class="dod-price" style="font-family:var(--font-d);font-weight:800;font-size:1.2rem">'+money(d.base)+'</span><button class="btn btn-primary" type="button">想吃 →</button></div></div></div>';
   wrap.querySelector("button.btn-primary").onclick=()=>openCustomize(d);
   const rb=wrap.querySelector(".recipe-btn");if(rb)rb.onclick=e=>{e.stopPropagation();openRecipe(d)};
 }
