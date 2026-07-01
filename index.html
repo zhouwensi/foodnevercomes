@@ -67,6 +67,10 @@ footer{padding:40px 0 100px;text-align:center;color:var(--muted);font-size:.88re
 .fakemap{width:100%;height:auto;border-radius:20px;border:3px solid #fff;margin:6px 0}.eta-card{background:#fff;border:1.5px solid var(--line);border-radius:16px;padding:14px;margin:8px 0}.eta-big{font-family:var(--font-d);font-weight:800;font-size:1.1rem}.eta-mins{background:#16A085;color:#fff;font-family:var(--font-d);font-weight:800;font-size:1.3rem;border-radius:12px;padding:8px 13px}.eta-bar{height:8px;border-radius:99px;background:#F0E3DE;margin-top:12px;overflow:hidden}.eta-bar span{display:block;height:100%;width:5%;background:linear-gradient(90deg,var(--accent),var(--accent-deep));transition:width 1s linear}
 .rider-card{display:flex;align-items:center;gap:12px;background:#fff;border:1.5px solid var(--line);border-radius:16px;padding:11px 14px;margin-bottom:12px}.rider-av{width:42px;height:42px;border-radius:50%;background:var(--cream);display:grid;place-items:center;font-size:1.4rem}.stages{list-style:none;padding:0;margin:18px 0;text-align:left}.stages li{display:flex;gap:12px;align-items:center;color:var(--muted);font-weight:700;margin-bottom:12px}.stages li .sdot{width:28px;height:28px;border-radius:50%;background:#fff;border:2px solid var(--line);display:grid;place-items:center;flex:none}.stages li.done{color:var(--text)}.stages li.done .sdot{background:var(--mint);border-color:var(--mint);color:#fff}.stages li.active{color:var(--accent-deep)}.stages li.active .sdot{background:var(--accent);border-color:var(--accent);color:#fff}
 .delivered-badge{font-size:3rem}.tr-event{background:#FFF7EE;border:1px solid #F4E4CF;border-radius:10px;padding:8px 12px;margin:8px 0;font-weight:700;font-size:.82rem;color:#8a5a00;text-align:center}
+.share-hint{color:var(--accent-deep);font-weight:800;font-size:.9rem;margin:10px 0;line-height:1.55}
+.share-img-wrap{margin:12px 0;padding:10px;background:#fff;border-radius:16px;border:2px solid var(--line)}
+.share-save-img{display:block;width:100%;height:auto;border-radius:12px;-webkit-touch-callout:default;touch-action:manipulation;pointer-events:auto;user-select:none;-webkit-user-select:none}
+.share-copy-ta{width:100%;font-size:.82rem;padding:10px 12px;border-radius:12px;border:1.5px solid var(--line);margin-top:10px;resize:none;font-family:inherit;font-weight:600;color:var(--muted);background:#fff;box-sizing:border-box}
 .toast{position:fixed;left:14px;right:14px;bottom:90px;margin:0 auto;width:fit-content;max-width:calc(100% - 28px);transform:translateY(160%);background:var(--text);color:#fff;font-weight:800;padding:13px 22px;border-radius:999px;z-index:90;transition:transform .35s cubic-bezier(.2,1.4,.4,1);text-align:center}.toast.show{transform:translateY(0)}
 .pay-layer{display:none;position:fixed;top:0;left:0;right:0;bottom:0;z-index:92;background:rgba(0,0,0,.52);align-items:flex-end;justify-content:center}.pay-layer.show{display:flex}.pay-sheet{width:100%;max-width:480px;background:#fff;border-radius:24px 24px 0 0;padding:22px 22px calc(22px + env(safe-area-inset-bottom));transform:translateY(100%);transition:transform .32s cubic-bezier(.3,1,.4,1)}.pay-layer.show .pay-sheet{transform:translateY(0)}.pay-head{text-align:center;font-family:var(--font-d);font-weight:800;font-size:1.02rem;color:var(--text)}.pay-amt{font-family:var(--font-d);font-size:2.6rem;font-weight:800;text-align:center;margin:10px 0 18px;color:var(--text)}.pay-merchant{display:flex;align-items:center;gap:12px;padding:14px;background:var(--ground);border-radius:14px;margin-bottom:14px;font-weight:700}.pay-status{text-align:center;padding:16px 0 8px}.pay-dots span{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--mint);margin:0 5px;animation:payDot 1s ease-in-out infinite}.pay-dots span:nth-child(2){animation-delay:.15s}.pay-dots span:nth-child(3){animation-delay:.3s}@keyframes payDot{0%,80%,100%{opacity:.25;transform:scale(.75)}40%{opacity:1;transform:scale(1)}}.pay-success{width:56px;height:56px;border-radius:50%;background:#eafaf0;color:#16A085;font-size:2rem;font-weight:800;line-height:56px;margin:0 auto}.pay-note{text-align:center;color:var(--muted);font-size:.76rem;font-weight:700;margin-top:12px}
 #bootErr{display:none;position:fixed;top:0;left:0;right:0;z-index:10000;background:#b00020;color:#fff;font-weight:800;font-size:.82rem;padding:10px 14px;text-align:center}
@@ -81,7 +85,7 @@ footer{padding:40px 0 100px;text-align:center;color:var(--muted);font-size:.88re
 <body>
 <div id="bootErr" role="alert"></div>
 <div id="page">
-<div class="legal-bar" id="legalBar">⚠️ 纯娱乐解压体验：不提供真实外卖、支付或配送服务。所有订单与金额均为虚拟。<span id="buildTag" style="opacity:.55;font-size:.72rem;margin-left:6px">v20260709</span><button type="button" id="legalClose">知道了</button></div>
+<div class="legal-bar" id="legalBar">⚠️ 纯娱乐解压体验：不提供真实外卖、支付或配送服务。所有订单与金额均为虚拟。<span id="buildTag" style="opacity:.55;font-size:.72rem;margin-left:6px">v20260710</span><button type="button" id="legalClose">知道了</button></div>
 <nav><div class="wrap nav-inner">
   <div class="brand"><span class="logo">🍜</span><span>饭永远不来<small>虚拟多巴胺厨房</small></span></div>
   <div class="nav-links"><a href="#menu">美食大厅</a><a href="#how">怎么玩</a><a href="#about">说明</a><a href="#" id="navOrders">📜 订单</a><button type="button" class="nav-wechat" id="navWechat" style="padding:8px 14px;border-radius:999px;font-weight:700;font-size:.9rem;color:var(--muted)">📱 公众号</button></div>
@@ -307,16 +311,25 @@ async function shareOrder(order,clickedBtn){
   if(btn){btn.disabled=true;btn.textContent="生成中…"}
   showToast("📸 正在生成晒单图…",99999);
   try{
-    let file=sharePrep&&sharePrep.file&&sharePrep.no===target.no?sharePrep.file:null;
+    let blob=null;
     const text=(sharePrep&&sharePrep.text)||shareText(target);
-    if(!file){const blob=await buildShareCard(target);if(!blob){hideToast();showToast("😅 生成失败，请重试");return}file=new File([blob],"fan-yongyuan-bulai.png",{type:"image/png"});sharePrep={file,text,order:target,no:target.no}}
+    if(sharePrep&&sharePrep.file&&sharePrep.no===target.no)blob=sharePrep.file;
+    if(!blob){const b=await buildShareCard(target);if(!b){hideToast();showToast("😅 生成失败，请重试");return}blob=b;sharePrep={file:new File([b],"fan-yongyuan-bulai.png",{type:"image/png"}),text,order:target,no:target.no}}
     hideToast();
+    const file=blob instanceof File?blob:new File([blob],"fan-yongyuan-bulai.png",{type:"image/png"});
     if(await tryNativeShare(file,text))return;
-    await saveShareImage(file,text);
+    await showShareSaveModal(target,blob,text);
+    showToast(isWeChat()?"👆 长按图片保存或转发":"👆 长按图片保存到相册",4000);
   }catch(e){hideToast();showToast("😅 生成失败，请重试")}
   finally{resetShareButtons()}
 }
-function showSharePreview(order){prepareShare(order);shareSheet.innerHTML='<button class="x-btn" type="button" style="position:absolute;right:14px;top:14px" data-x>✕</button><h3>📸 分享你的虚拟外卖</h3><p style="color:var(--muted);font-weight:700;margin:12px 0">晒单图为外卖小票样式，含网站码 + 公众号码</p><div id="sharePreview" style="min-height:200px;color:var(--muted);font-weight:700;padding:20px">生成中…</div><button class="btn btn-primary" type="button" id="doShare" style="width:100%;margin-top:12px">分享 / 保存图片</button>';shareSheet.querySelector("[data-x]").onclick=()=>{shareModal.classList.remove("show");overlay.classList.remove("show")};openModal(shareModal);buildShareCard(order).then(b=>{if(!b)return;const img=new Image();img.src=URL.createObjectURL(b);img.style.maxWidth="100%";img.style.borderRadius="16px";img.onload=()=>{sharePrep={file:new File([b],"share.png",{type:"image/png"}),text:shareText(order),order,no:order.no};document.getElementById("sharePreview").innerHTML="";document.getElementById("sharePreview").appendChild(img)};document.getElementById("doShare").onclick=()=>shareOrder(order,document.getElementById("doShare"))}).catch(()=>{document.getElementById("sharePreview").textContent="生成失败，请重试"})}
+function showSharePreview(order){
+  prepareShare(order);
+  shareSheet.innerHTML='<button class="x-btn" type="button" style="position:absolute;right:14px;top:14px" data-x>✕</button><h3>📸 分享你的虚拟外卖</h3><p style="color:var(--muted);font-weight:700;margin:12px 0">生成中…</p>';
+  shareSheet.querySelector("[data-x]").onclick=()=>{shareModal.classList.remove("show");overlay.classList.remove("show")};
+  openModal(shareModal);
+  buildShareCard(order).then(b=>{if(!b)throw 0;const text=shareText(order);return showShareSaveModal(order,b,text)}).catch(()=>{shareSheet.innerHTML='<button class="x-btn" type="button" style="position:absolute;right:14px;top:14px" data-x>✕</button><p style="color:var(--muted);font-weight:700;padding:20px">生成失败，请重试</p>';shareSheet.querySelector("[data-x]").onclick=()=>{shareModal.classList.remove("show");overlay.classList.remove("show")}});
+}
 function esc(s){return String(s).replace(/&/g,"&amp;").replace(/"/g,"&quot;").replace(/</g,"&lt;")}
 function offerBlock(ctx,order){
   const dishes=((order&&order.dishes)||[]).filter(x=>RECIPES[x.id]);
@@ -412,19 +425,26 @@ let toastT;
 function hideToast(){clearTimeout(toastT);const t=document.getElementById("toast");if(t)t.classList.remove("show")}
 function showToast(msg,dur){const t=document.getElementById("toast");if(!t)return;t.textContent=msg;t.classList.add("show");clearTimeout(toastT);toastT=setTimeout(()=>t.classList.remove("show"),dur==null?2800:dur)}
 function isWeChat(){return/MicroMessenger/i.test(navigator.userAgent)}
+function isMobile(){return/Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent)}
+function blobToDataUrl(blob){return new Promise((res,rej)=>{const r=new FileReader();r.onload=()=>res(r.result);r.onerror=rej;r.readAsDataURL(blob)})}
 function resetShareButtons(){document.querySelectorAll("#trShare,#doShare").forEach(b=>{b.disabled=false;if(b.id==="trShare")b.textContent="📸 分享晒单（双二维码）";else if(b.id==="doShare")b.textContent="分享 / 保存图片"})}
 function shareWithTimeout(data,ms){return Promise.race([navigator.share(data),new Promise((_,rej)=>setTimeout(()=>rej(new Error("share_timeout")),ms))])}
 async function tryNativeShare(file,text){
-  if(isWeChat())return false;
+  if(isWeChat()||isMobile())return false;
   try{
-    if(navigator.canShare&&navigator.canShare({files:[file]})){await shareWithTimeout({files:[file],text},12000);showToast("📸 已唤起分享");return true}
-    if(navigator.share){await shareWithTimeout({text,url:SITE_URL},12000);showToast("📸 已唤起分享");return true}
+    if(navigator.canShare&&navigator.canShare({files:[file]})){await shareWithTimeout({files:[file],text,title:"饭永远不来晒单"},12000);showToast("📸 已唤起分享");return true}
   }catch(e){if(e&&e.name==="AbortError")return true}
   return false;
 }
-async function saveShareImage(file,text){
-  const a=document.createElement("a");a.href=URL.createObjectURL(file);a.download="饭永远不来-晒单.png";document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),5000);
-  try{await navigator.clipboard.writeText(text);showToast("📸 图片已保存 · 文案已复制")}catch(e){showToast("📸 晒单图片已保存")}
+async function showShareSaveModal(order,blob,text){
+  const dataUrl=await blobToDataUrl(blob);
+  const hint=isWeChat()?"👇 长按下方图片 →「保存图片」或「转发给朋友」":"👇 长按图片保存到相册（或右键另存为）";
+  shareSheet.innerHTML='<button class="x-btn" type="button" style="position:absolute;right:14px;top:14px" data-x>✕</button><h3>📸 晒单小票</h3><p class="share-hint">'+hint+'</p><div class="share-img-wrap"><img class="share-save-img" id="shareSaveImg" src="'+dataUrl+'" alt="饭永远不来晒单" draggable="false"></div><textarea id="shareCopyTa" readonly class="share-copy-ta" rows="3"></textarea><button class="btn btn-primary" type="button" id="copyShareText" style="width:100%;margin-top:12px">📋 复制分享文案</button>';
+  document.getElementById("shareCopyTa").value=text;
+  sharePrep={file:blob instanceof File?blob:new File([blob],"fan-yongyuan-bulai.png",{type:"image/png"}),text,order,no:order.no};
+  shareSheet.querySelector("[data-x]").onclick=()=>{shareModal.classList.remove("show");if(!anyModalOpen())overlay.classList.remove("show")};
+  shareSheet.querySelector("#copyShareText").onclick=async()=>{const ta=document.getElementById("shareCopyTa");try{if(navigator.clipboard)await navigator.clipboard.writeText(text);else{ta.focus();ta.select();document.execCommand("copy")}showToast("📋 文案已复制")}catch(e){ta.focus();ta.select();showToast("请手动全选复制文案")}};
+  openModal(shareModal);
 }
 function addToCart(d){const key=d.id+"|"+d.opts,hit=cart.find(c=>c.key===key);if(hit)hit.qty++;else cart.push({key,id:d.id,name:d.name,emoji:d.emoji,cny:d.cny,opts:d.opts,qty:1});updatePill(true);renderCart()}
 function changeQty(key,dl){const it=cart.find(c=>c.key===key);if(!it)return;it.qty+=dl;if(it.qty<=0)cart.splice(cart.indexOf(it),1);updatePill();renderCart()}
