@@ -81,7 +81,7 @@ footer{padding:40px 0 100px;text-align:center;color:var(--muted);font-size:.88re
 <body>
 <div id="bootErr" role="alert"></div>
 <div id="page">
-<div class="legal-bar" id="legalBar">⚠️ 纯娱乐解压体验：不提供真实外卖、支付或配送服务。所有订单与金额均为虚拟。<span id="buildTag" style="opacity:.55;font-size:.72rem;margin-left:6px">v20260708</span><button type="button" id="legalClose">知道了</button></div>
+<div class="legal-bar" id="legalBar">⚠️ 纯娱乐解压体验：不提供真实外卖、支付或配送服务。所有订单与金额均为虚拟。<span id="buildTag" style="opacity:.55;font-size:.72rem;margin-left:6px">v20260709</span><button type="button" id="legalClose">知道了</button></div>
 <nav><div class="wrap nav-inner">
   <div class="brand"><span class="logo">🍜</span><span>饭永远不来<small>虚拟多巴胺厨房</small></span></div>
   <div class="nav-links"><a href="#menu">美食大厅</a><a href="#how">怎么玩</a><a href="#about">说明</a><a href="#" id="navOrders">📜 订单</a><button type="button" class="nav-wechat" id="navWechat" style="padding:8px 14px;border-radius:999px;font-weight:700;font-size:.9rem;color:var(--muted)">📱 公众号</button></div>
@@ -300,21 +300,23 @@ async function buildShareCard(order){
 let sharePrep=null;
 function shareText(order){return"我在饭永远不来点了 "+(order.total||"一桌好菜")+"，实付 ¥0 😌 饭永远不到，多巴胺先到 → "+SITE_URL}
 function prepareShare(order){const text=shareText(order);sharePrep={file:null,text,order,no:order.no};buildShareCard(order).then(b=>{if(b&&sharePrep&&sharePrep.no===order.no)sharePrep.file=new File([b],"fan-yongyuan-bulai.png",{type:"image/png"})}).catch(()=>{})}
-async function shareOrder(order){
+async function shareOrder(order,clickedBtn){
   const target=order||(sharePrep&&sharePrep.order)||loadOrders()[0];
   if(!target){showToast("请先下一单再分享 😋");return}
-  const btn=document.activeElement,isBtn=btn&&btn.tagName==="BUTTON";let orig="";
-  if(isBtn){orig=btn.textContent;btn.disabled=true;btn.textContent="生成中…"}
-  showToast("📸 正在生成晒单图…");
-  let file=sharePrep&&sharePrep.file&&sharePrep.no===target.no?sharePrep.file:null;
-  const text=(sharePrep&&sharePrep.text)||shareText(target);
-  if(!file){const blob=await buildShareCard(target);if(!blob){if(isBtn){btn.disabled=false;btn.textContent=orig}showToast("😅 生成失败，请重试");return}file=new File([blob],"fan-yongyuan-bulai.png",{type:"image/png"});sharePrep={file,text,order:target,no:target.no}}
-  try{if(navigator.canShare&&navigator.canShare({files:[file]})){await navigator.share({files:[file],text});if(isBtn){btn.disabled=false;btn.textContent=orig}return}if(navigator.share){await navigator.share({text,url:SITE_URL});if(isBtn){btn.disabled=false;btn.textContent=orig}return}}catch(e){if(e&&e.name==="AbortError"){if(isBtn){btn.disabled=false;btn.textContent=orig}return}}
-  const a=document.createElement("a");a.href=URL.createObjectURL(file);a.download="饭永远不来-晒单.png";document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),5000);
-  try{await navigator.clipboard.writeText(text);showToast("📸 图片已保存 · 文案已复制")}catch(e){showToast("📸 晒单图片已保存")}
-  if(isBtn){btn.disabled=false;btn.textContent=orig}
+  const btn=clickedBtn||null;
+  if(btn){btn.disabled=true;btn.textContent="生成中…"}
+  showToast("📸 正在生成晒单图…",99999);
+  try{
+    let file=sharePrep&&sharePrep.file&&sharePrep.no===target.no?sharePrep.file:null;
+    const text=(sharePrep&&sharePrep.text)||shareText(target);
+    if(!file){const blob=await buildShareCard(target);if(!blob){hideToast();showToast("😅 生成失败，请重试");return}file=new File([blob],"fan-yongyuan-bulai.png",{type:"image/png"});sharePrep={file,text,order:target,no:target.no}}
+    hideToast();
+    if(await tryNativeShare(file,text))return;
+    await saveShareImage(file,text);
+  }catch(e){hideToast();showToast("😅 生成失败，请重试")}
+  finally{resetShareButtons()}
 }
-function showSharePreview(order){prepareShare(order);shareSheet.innerHTML='<button class="x-btn" type="button" style="position:absolute;right:14px;top:14px" data-x>✕</button><h3>📸 分享你的虚拟外卖</h3><p style="color:var(--muted);font-weight:700;margin:12px 0">晒单图为外卖小票样式，含网站码 + 公众号码</p><div id="sharePreview" style="min-height:200px;color:var(--muted);font-weight:700;padding:20px">生成中…</div><button class="btn btn-primary" type="button" id="doShare" style="width:100%;margin-top:12px">分享 / 保存图片</button>';shareSheet.querySelector("[data-x]").onclick=()=>{shareModal.classList.remove("show");overlay.classList.remove("show")};openModal(shareModal);buildShareCard(order).then(b=>{if(!b)return;const img=new Image();img.src=URL.createObjectURL(b);img.style.maxWidth="100%";img.style.borderRadius="16px";img.onload=()=>{sharePrep={file:new File([b],"share.png",{type:"image/png"}),text:shareText(order),order,no:order.no};document.getElementById("sharePreview").innerHTML="";document.getElementById("sharePreview").appendChild(img)};document.getElementById("doShare").onclick=()=>shareOrder()}).catch(()=>{document.getElementById("sharePreview").textContent="生成失败，请重试"})}
+function showSharePreview(order){prepareShare(order);shareSheet.innerHTML='<button class="x-btn" type="button" style="position:absolute;right:14px;top:14px" data-x>✕</button><h3>📸 分享你的虚拟外卖</h3><p style="color:var(--muted);font-weight:700;margin:12px 0">晒单图为外卖小票样式，含网站码 + 公众号码</p><div id="sharePreview" style="min-height:200px;color:var(--muted);font-weight:700;padding:20px">生成中…</div><button class="btn btn-primary" type="button" id="doShare" style="width:100%;margin-top:12px">分享 / 保存图片</button>';shareSheet.querySelector("[data-x]").onclick=()=>{shareModal.classList.remove("show");overlay.classList.remove("show")};openModal(shareModal);buildShareCard(order).then(b=>{if(!b)return;const img=new Image();img.src=URL.createObjectURL(b);img.style.maxWidth="100%";img.style.borderRadius="16px";img.onload=()=>{sharePrep={file:new File([b],"share.png",{type:"image/png"}),text:shareText(order),order,no:order.no};document.getElementById("sharePreview").innerHTML="";document.getElementById("sharePreview").appendChild(img)};document.getElementById("doShare").onclick=()=>shareOrder(order,document.getElementById("doShare"))}).catch(()=>{document.getElementById("sharePreview").textContent="生成失败，请重试"})}
 function esc(s){return String(s).replace(/&/g,"&amp;").replace(/"/g,"&quot;").replace(/</g,"&lt;")}
 function offerBlock(ctx,order){
   const dishes=((order&&order.dishes)||[]).filter(x=>RECIPES[x.id]);
@@ -406,7 +408,24 @@ function renderDishOfDay(){
   const rb=wrap.querySelector(".recipe-btn");if(rb)rb.onclick=e=>{e.stopPropagation();openRecipe(d)};
 }
 function renderTrending(){const rail=document.getElementById("trendRail");rail.innerHTML="";const picks=[];COUNTRIES.forEach(co=>DISHES[co.code].forEach((d,i)=>{if(d[5]==="best"||d[5]==="hot")picks.push(parseDish(co,d,i))}));picks.slice(0,10).forEach(d=>rail.appendChild(buildCard(d)))}
-let toastT;function showToast(msg){const t=document.getElementById("toast");t.textContent=msg;t.classList.add("show");clearTimeout(toastT);toastT=setTimeout(()=>t.classList.remove("show"),2800)}
+let toastT;
+function hideToast(){clearTimeout(toastT);const t=document.getElementById("toast");if(t)t.classList.remove("show")}
+function showToast(msg,dur){const t=document.getElementById("toast");if(!t)return;t.textContent=msg;t.classList.add("show");clearTimeout(toastT);toastT=setTimeout(()=>t.classList.remove("show"),dur==null?2800:dur)}
+function isWeChat(){return/MicroMessenger/i.test(navigator.userAgent)}
+function resetShareButtons(){document.querySelectorAll("#trShare,#doShare").forEach(b=>{b.disabled=false;if(b.id==="trShare")b.textContent="📸 分享晒单（双二维码）";else if(b.id==="doShare")b.textContent="分享 / 保存图片"})}
+function shareWithTimeout(data,ms){return Promise.race([navigator.share(data),new Promise((_,rej)=>setTimeout(()=>rej(new Error("share_timeout")),ms))])}
+async function tryNativeShare(file,text){
+  if(isWeChat())return false;
+  try{
+    if(navigator.canShare&&navigator.canShare({files:[file]})){await shareWithTimeout({files:[file],text},12000);showToast("📸 已唤起分享");return true}
+    if(navigator.share){await shareWithTimeout({text,url:SITE_URL},12000);showToast("📸 已唤起分享");return true}
+  }catch(e){if(e&&e.name==="AbortError")return true}
+  return false;
+}
+async function saveShareImage(file,text){
+  const a=document.createElement("a");a.href=URL.createObjectURL(file);a.download="饭永远不来-晒单.png";document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),5000);
+  try{await navigator.clipboard.writeText(text);showToast("📸 图片已保存 · 文案已复制")}catch(e){showToast("📸 晒单图片已保存")}
+}
 function addToCart(d){const key=d.id+"|"+d.opts,hit=cart.find(c=>c.key===key);if(hit)hit.qty++;else cart.push({key,id:d.id,name:d.name,emoji:d.emoji,cny:d.cny,opts:d.opts,qty:1});updatePill(true);renderCart()}
 function changeQty(key,dl){const it=cart.find(c=>c.key===key);if(!it)return;it.qty+=dl;if(it.qty<=0)cart.splice(cart.indexOf(it),1);updatePill();renderCart()}
 function cartCount(){return cart.reduce((n,c)=>n+c.qty,0)}
@@ -473,7 +492,7 @@ function startTracking(totalLabel,order){
   const etaMin=Math.max(1,Math.round(remainingNow()/60)),STAGES=[[0,"订单已确认","✅"],[0.1,"厨房正在做（ imaginary ）","🍳"],[PICKUP_FRAC,"骑手已取餐","🛵"],[0.82,"即将送达","🏠"]];
   trSheet.innerHTML='<button class="x-btn" type="button" id="trClose" style="position:absolute;right:14px;top:14px">✕</button><h3 id="trTitle">厨房备餐中 🍳</h3><p style="color:var(--muted);font-weight:700">订单 '+orderNo+' · 「已付」'+totalLabel+'</p>'+offerBlock("wait",order)+'<svg class="fakemap" viewBox="0 0 360 220"><rect width="360" height="220" fill="#EAEDED"/><text x="28" y="194" font-size="14">🏪</text><text x="296" y="54" font-size="14">🏠</text><path d="M42,180 L110,120 L246,66 L316,50" fill="none" stroke="#ccc" stroke-width="5" stroke-dasharray="8 6"/><path id="trRoad" d="M42,180 L110,120 L246,66 L316,50" fill="none" stroke="#F25C54" stroke-width="5" stroke-linecap="round"/><text id="trRider" x="42" y="180" font-size="20">'+courier.e+'</text></svg><div class="eta-card"><div style="display:flex;justify-content:space-between;align-items:center"><div><div class="eta-big" id="trEta">厨房备餐中…</div><div style="color:var(--muted);font-size:.78rem;font-weight:700">剩余 <span id="trTime">--:--</span></div></div><div class="eta-mins">'+etaMin+'<small style="font-size:.55rem">分钟</small></div></div><div class="eta-bar"><span id="trBar"></span></div></div><div class="rider-card"><div class="rider-av">'+courier.e+'</div><div><b>'+courier.n+(courier.rare?" ✨稀有":"")+'</b><br><small id="riderSub">在餐厅等待出餐…</small></div></div><div class="tr-event" id="trEvent"></div><ul class="stages" id="trStages">'+STAGES.map((s,i)=>'<li data-i="'+i+'"><span class="sdot">'+s[2]+'</span>'+s[1]+'</li>').join("")+'</ul><button class="btn btn-primary" type="button" id="trShare" style="width:100%">📸 分享晒单（双二维码）</button><button class="btn btn-ghost" type="button" id="trPreview" style="width:100%;margin-top:8px">预览晒单图</button>';
   openModal(trModal);prepareShare(order);wireRecipeOffers(trSheet);
-  trSheet.querySelector("#trClose").onclick=closeAll;trSheet.querySelector("#trShare").onclick=()=>shareOrder(order);trSheet.querySelector("#trPreview").onclick=()=>showSharePreview(order);
+  trSheet.querySelector("#trClose").onclick=closeAll;trSheet.querySelector("#trShare").onclick=e=>shareOrder(order,e.currentTarget);trSheet.querySelector("#trPreview").onclick=()=>showSharePreview(order);
   const rider=trSheet.querySelector("#trRider"),timeEl=trSheet.querySelector("#trTime"),lis=[...trSheet.querySelectorAll("#trStages li")],evEl=trSheet.querySelector("#trEvent"),road=trSheet.querySelector("#trRoad"),roadLen=road?road.getTotalLength():0,titleEl=trSheet.querySelector("#trTitle"),etaEl=trSheet.querySelector("#trEta"),subEl=trSheet.querySelector("#riderSub");
   let pickedToast=false;
   function paint(){
@@ -498,7 +517,7 @@ function startTracking(totalLabel,order){
 function renderDelivered(order){
   trSheet.innerHTML='<button class="x-btn" type="button" id="trClose" style="position:absolute;right:14px;top:14px">✕</button><div style="text-align:center;padding:6px 0"><div class="delivered-badge">🎉</div><h3 style="margin-top:8px">已送达！…虚拟的 😋</h3><p style="color:var(--muted);font-weight:700;margin:10px 0">订单 '+order.no+' 「送达」了。饭永远不来，多巴胺到了，钱包一分没动。</p><p style="font-size:.9rem;color:var(--muted);font-weight:700">'+order.flag+" "+order.items+" · "+order.total+" · "+order.date+'</p>'+offerBlock("done",order)+'<p style="font-family:var(--font-d);font-weight:800;color:var(--mint);font-size:1rem;margin:12px 0">危机解除。钱包完好。🧠🧡</p><button class="btn btn-primary" type="button" id="trShare" style="width:100%;margin-bottom:8px">📸 分享晒单（双二维码）</button><button class="btn btn-ghost" type="button" id="trPreview" style="width:100%;margin-bottom:8px">预览晒单图</button><div style="display:flex;gap:10px"><button class="btn btn-ghost" type="button" id="trReorder" style="flex:1">再点一单 🍽️</button><button class="btn btn-ghost" type="button" id="trDone" style="flex:1">完成</button></div></div>';
   prepareShare(order);wireRecipeOffers(trSheet);
-  trSheet.querySelector("#trClose").onclick=closeAll;trSheet.querySelector("#trShare").onclick=()=>shareOrder(order);trSheet.querySelector("#trPreview").onclick=()=>showSharePreview(order);
+  trSheet.querySelector("#trClose").onclick=closeAll;trSheet.querySelector("#trShare").onclick=e=>shareOrder(order,e.currentTarget);trSheet.querySelector("#trPreview").onclick=()=>showSharePreview(order);
   trSheet.querySelector("#trDone").onclick=closeAll;trSheet.querySelector("#trReorder").onclick=()=>{closeAll();document.getElementById("menu").scrollIntoView({behavior:"smooth"})};
   openModal(trModal);
 }
